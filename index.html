@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Тёплый свет лампы и фактура матовой архивной бумаги по всему экрану -->
   <div class="lamp-glow"></div>
   <div class="paper-grain"></div>
   <div class="vignette"></div>
@@ -24,7 +23,6 @@
       <h1 class="splash-title">ДЕЛО № 08-11</h1>
       <p class="splash-subtitle">О ПОХИЩЕНИИ ГЛАВНОГО КОНВЕРТА</p>
 
-      <!-- Полароид с анимированной GIF Детектива Марии -->
       <div class="splash-avatar-frame" id="splash-avatar-frame">
         <div class="avatar-pin"></div>
         <img id="splash-avatar-img" class="splash-avatar-media" src="assets/detective.gif" alt="Детектив Мария" />
@@ -35,7 +33,7 @@
 
       <div class="splash-terminal" id="splash-terminal">
         <div class="term-line" id="term-line-1">> Подготовка архивного стола...</div>
-        <div class="term-line hidden" id="term-line-2">> Разложены 6 улик и красный шнур...</div>
+        <div class="term-line hidden" id="term-line-2">> Разложены 6 улик и 4 спецпроверки...</div>
         <div class="term-line hidden" id="term-line-3">> Заряжена кассета «Электроника-302»...</div>
         <div class="term-line hidden" id="term-line-4">> Доступ разрешён: ДЕТЕКТИВ МАРИЯ</div>
       </div>
@@ -95,7 +93,7 @@
     </div>
   </main>
 
-  <!-- Модальное окно активного этапа -->
+  <!-- Модальное окно активного этапа (Допрос / Улика) -->
   <div id="stage-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
     <div class="dossier-card">
       <button id="close-modal" class="close-btn" aria-label="Закрыть">✕</button>
@@ -144,6 +142,32 @@
         </div>
         <div id="final-container"></div>
         <button id="action-btn" class="primary-action-btn hidden">ПРОДОЛЖИТЬ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО МИНИ-ИГР (Сначала точные правила -> затем игра) -->
+  <div id="minigame-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="dossier-card minigame-card">
+      <div class="mg-header">
+        <span id="mg-badge" class="dossier-tag">СПЕЦПРОВЕРКА</span>
+        <h2 id="mg-title" class="dossier-title">Название мини-игры</h2>
+      </div>
+
+      <!-- Экран 1: Точные правила перед запуском -->
+      <div id="mg-rules-screen" class="mg-rules-screen">
+        <div class="rules-box">
+          <div class="rules-label">📋 ИНСТРУКЦИЯ ПЕРЕД ЗАПУСКОМ:</div>
+          <p id="mg-rules-text" class="rules-text"></p>
+          <div id="mg-controls-hint" class="rules-hint"></div>
+        </div>
+        <button id="mg-start-btn" class="primary-action-btn">▶ НАЧАТЬ ИСПЫТАНИЕ</button>
+      </div>
+
+      <!-- Экран 2: Игровое поле -->
+      <div id="mg-play-screen" class="mg-play-screen hidden">
+        <div id="mg-arena" class="mg-arena"></div>
+        <p id="mg-feedback" class="feedback-msg" style="text-align:center;"></p>
       </div>
     </div>
   </div>
