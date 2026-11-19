@@ -1,13 +1,13 @@
 :root {
-  --bg-negative: #0b0c0e;
-  --card-dark: #16181d;
-  --card-border: #2c303a;
-  --text-main: #e2e5ec;
-  --text-muted: #848d9f;
-  --red-thread: #ff1e38;
-  --red-glow: rgba(255, 30, 56, 0.65);
-  --paper-color: #dcd6c8;
-  --ink-dark: #141414;
+  --paper-base: #dfd5c0;
+  --paper-shade: #cbbd9f;
+  --paper-card: #f5efe2;
+  --ink-dark: #1f1b18;
+  --ink-muted: #5c5347;
+  --red-thread: #c9182b;
+  --red-bright: #e61c32;
+  --red-glow: rgba(201, 24, 43, 0.45);
+  --tape-yellow: rgba(232, 213, 152, 0.72);
 }
 
 * {
@@ -18,40 +18,53 @@
 }
 
 body {
-  background-color: var(--bg-negative);
-  color: var(--text-main);
+  background-color: var(--paper-base);
+  background-image:
+    radial-gradient(circle at 50% 24%, rgba(255, 248, 231, 0.75) 0%, rgba(214, 199, 171, 0.55) 55%, rgba(158, 141, 114, 0.85) 100%),
+    repeating-linear-gradient(0deg, rgba(60, 48, 34, 0.03) 0px, rgba(60, 48, 34, 0.03) 1px, transparent 1px, transparent 26px);
+  color: var(--ink-dark);
   font-family: 'IBM Plex Mono', monospace;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-  padding-bottom: 32px;
+  padding-bottom: 36px;
 }
 
-/* Эффект плёнки и негатива */
-.vhs-grain {
+/* Тёплый свет настольной лампы */
+.lamp-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 18%, rgba(255, 243, 210, 0.35), transparent 65%);
+}
+
+/* Фактура матовой архивной бумаги */
+.paper-grain {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 90;
-  opacity: 0.055;
-  background-image: radial-gradient(#ffffff 1px, transparent 0);
-  background-size: 3px 3px;
+  opacity: 0.07;
+  background-image: radial-gradient(#2b2116 0.9px, transparent 0);
+  background-size: 4px 4px;
 }
 
+/* Мягкое затемнение по краям стола */
 .vignette {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 89;
-  background: radial-gradient(circle at center, transparent 55%, rgba(0, 0, 0, 0.85) 100%);
+  background: radial-gradient(circle at center, transparent 58%, rgba(45, 36, 25, 0.42) 100%);
 }
 
-/* ЗАГРУЗОЧНЫЙ ЭКРАН (СПЛЭШ-СКРИН) */
+/* ЗАГРУЗОЧНЫЙ ЭКРАН (АРХИВНАЯ ПАПКА + GIF ДЕТЕКТИВА) */
 .splash-screen {
   position: fixed;
   inset: 0;
   z-index: 85;
-  background: radial-gradient(circle at center, #151821 0%, #08090c 100%);
+  background: radial-gradient(circle at center, #383028 0%, #1a1612 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,85 +75,92 @@ body {
 
 .splash-screen.fade-out {
   opacity: 0;
-  transform: scale(1.04);
+  transform: scale(1.03);
   pointer-events: none;
 }
 
 .splash-folder {
   width: 100%;
   max-width: 360px;
-  background: #14161c;
-  border: 1px solid #323746;
-  border-top: 4px solid var(--red-thread);
-  border-radius: 6px;
+  background: #e9dfc9;
+  background-image: linear-gradient(180deg, #efe6d3 0%, #dfd2b6 100%);
+  border: 1px solid #b5a689;
+  border-top: 5px solid var(--red-thread);
+  border-radius: 5px;
   padding: 20px 16px 18px;
   position: relative;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.78), inset 0 0 30px rgba(139, 118, 86, 0.2);
   text-align: center;
+  color: var(--ink-dark);
 }
 
 .folder-tab {
   position: absolute;
   top: -22px;
-  left: 16px;
-  background: var(--red-thread);
-  color: #fff;
+  left: 14px;
+  background: #d8c9ab;
+  border: 1px solid #b5a689;
+  border-bottom: none;
+  color: var(--ink-dark);
   font-size: 10px;
   font-weight: 700;
   padding: 4px 10px;
-  border-radius: 4px 4px 0 0;
-  letter-spacing: 1px;
+  border-radius: 5px 5px 0 0;
+  letter-spacing: 0.8px;
 }
 
 .folder-stamp {
   display: inline-block;
   border: 2px solid var(--red-thread);
   color: var(--red-thread);
-  font-size: 10px;
+  font-family: 'Special Elite', 'IBM Plex Mono', monospace;
+  font-size: 11px;
   font-weight: 700;
-  padding: 2px 8px;
-  transform: rotate(-2deg);
+  padding: 3px 9px;
+  transform: rotate(-2.5deg);
   letter-spacing: 1.5px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 12px rgba(255, 30, 56, 0.25);
+  margin-bottom: 8px;
+  opacity: 0.9;
 }
 
 .splash-title {
-  font-size: 22px;
-  letter-spacing: 2px;
-  color: #fff;
+  font-family: 'Special Elite', 'IBM Plex Mono', monospace;
+  font-size: 24px;
+  letter-spacing: 1.5px;
+  color: #181411;
   margin-bottom: 2px;
 }
 
 .splash-subtitle {
   font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
+  color: var(--ink-muted);
+  font-weight: 600;
+  letter-spacing: 0.8px;
   margin-bottom: 12px;
 }
 
-/* Рамка под GIF-анимацию Детектива Марии */
+/* Полароид-рамка с GIF-анимацией Детектива Марии */
 .splash-avatar-frame {
   position: relative;
-  width: 165px;
-  height: 210px;
+  width: 162px;
+  height: 215px;
   margin: 0 auto 14px;
-  background: var(--paper-color);
-  padding: 6px 6px 26px;
-  border-radius: 3px;
-  transform: rotate(-1.5deg);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), 0 0 16px rgba(255, 30, 56, 0.25);
-  border: 1px solid #4a453d;
+  background: #fbf8f1;
+  padding: 7px 7px 28px;
+  border-radius: 2px;
+  transform: rotate(-1.8deg);
+  box-shadow: 0 8px 20px rgba(34, 26, 18, 0.45);
+  border: 1px solid #c9bea8;
 }
 
 .avatar-pin {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: var(--red-thread);
-  box-shadow: 0 0 10px var(--red-thread);
+  background: radial-gradient(circle at 35% 35%, #ff5e6e, var(--red-thread) 65%, #7a0915);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.45);
   position: absolute;
-  top: -6px;
+  top: -7px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -150,9 +170,9 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border: 1px solid #222;
+  border: 1px solid #b8ad98;
   display: block;
-  background: #0d0f12;
+  background: #1a1816;
 }
 
 .splash-avatar-media.hidden {
@@ -162,12 +182,11 @@ body {
 .splash-avatar-fallback {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #1b1e26, #3a1c28);
+  background: #2b2622;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 52px;
-  border: 1px solid #222;
 }
 
 .splash-avatar-fallback.hidden {
@@ -180,23 +199,22 @@ body {
   left: 0;
   right: 0;
   font-family: 'Caveat', cursive;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
-  color: var(--ink-dark);
-  letter-spacing: 0.5px;
+  color: #1c1815;
 }
 
 .splash-terminal {
-  background: #0a0b0e;
-  border: 1px solid #252934;
-  border-radius: 4px;
-  padding: 10px 12px;
+  background: #f7f2e7;
+  border: 1px dashed #9e9178;
+  border-radius: 3px;
+  padding: 9px 11px;
   text-align: left;
-  min-height: 92px;
+  min-height: 88px;
   margin-bottom: 12px;
   font-size: 10.5px;
   line-height: 1.55;
-  color: #cfd6e6;
+  color: #2d2620;
 }
 
 .term-line.hidden {
@@ -204,15 +222,15 @@ body {
 }
 
 #term-line-4 {
-  color: #2ecc71;
+  color: #1e7e34;
   font-weight: 700;
 }
 
 .splash-progress-wrap {
   width: 100%;
   height: 6px;
-  background: #0a0b0e;
-  border: 1px solid #262a36;
+  background: #cfc3ab;
+  border: 1px solid #a89b82;
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 14px;
@@ -222,50 +240,49 @@ body {
   width: 0%;
   height: 100%;
   background: var(--red-thread);
-  box-shadow: 0 0 10px var(--red-thread);
   transition: width 0.35s ease;
 }
 
 .enter-case-btn {
   width: 100%;
   padding: 13px;
-  background: #252934;
-  color: #7c8496;
-  border: 1px solid #383e4e;
+  background: #c7bba3;
+  color: #6b6152;
+  border: 1px solid #a6987e;
   border-radius: 4px;
   font-family: inherit;
   font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   cursor: not-allowed;
   transition: all 0.3s ease;
 }
 
 .enter-case-btn.ready {
   background: var(--red-thread);
-  color: #fff;
-  border-color: var(--red-thread);
+  color: #fffaf2;
+  border-color: #9c0f1e;
   cursor: pointer;
-  box-shadow: 0 0 20px var(--red-glow);
-  animation: pulseNode 2s infinite;
+  box-shadow: 0 5px 16px rgba(201, 24, 43, 0.45);
 }
 
-/* Шапка и шифр сейфа */
+/* ВЕРХНЯЯ ПАНЕЛЬ НА БУМАЖНОМ СТОЛЕ */
 .case-header {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(11, 12, 14, 0.94);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid #262932;
-  padding: 12px 14px;
+  background: rgba(230, 220, 198, 0.94);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid #b5a689;
+  box-shadow: 0 4px 14px rgba(45, 36, 25, 0.14);
+  padding: 10px 14px;
 }
 
 .case-title-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .title-left {
@@ -276,56 +293,57 @@ body {
 }
 
 .case-number {
+  font-family: 'Special Elite', 'IBM Plex Mono', monospace;
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: var(--text-main);
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  color: var(--ink-dark);
   margin-right: 2px;
 }
 
 .icon-ctrl-btn {
-  background: #171a21;
-  border: 1px solid #323744;
-  color: var(--text-main);
+  background: #f5efe2;
+  border: 1px solid #a6987e;
+  color: var(--ink-dark);
   font-family: inherit;
   font-size: 10px;
+  font-weight: 600;
   padding: 3px 7px;
   border-radius: 3px;
   cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .icon-ctrl-btn.muted {
-  color: var(--text-muted);
-  border-color: #252932;
-}
-
-.icon-ctrl-btn:active {
-  border-color: var(--red-thread);
+  color: #8c8070;
+  background: #e2d8c3;
 }
 
 .stamp-secret {
   border: 2px solid var(--red-thread);
   color: var(--red-thread);
+  font-family: 'Special Elite', 'IBM Plex Mono', monospace;
   font-size: 10px;
   font-weight: 700;
-  padding: 2px 5px;
+  padding: 2px 6px;
   transform: rotate(-3deg);
   letter-spacing: 1px;
-  box-shadow: 0 0 8px rgba(255, 30, 56, 0.3);
 }
 
 .safe-code-box {
-  background: #121418;
-  border: 1px dashed #3a3f4d;
-  padding: 8px 10px;
-  border-radius: 4px;
+  background: #f6f0e3;
+  border: 1px solid #b5a689;
+  box-shadow: inset 0 1px 4px rgba(60, 48, 34, 0.1);
+  padding: 7px 9px;
+  border-radius: 3px;
 }
 
 .safe-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  letter-spacing: 0.8px;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  margin-bottom: 5px;
+  letter-spacing: 0.6px;
 }
 
 .code-slots {
@@ -335,154 +353,266 @@ body {
 }
 
 .code-slot {
-  background: #08090b;
-  border: 1px solid #2a2e38;
-  color: #495061;
+  background: #e4dac5;
+  border: 1px dashed #9e9076;
+  color: #8a7e6b;
   text-align: center;
-  padding: 6px 2px;
+  padding: 5px 2px;
   font-size: 11px;
   font-weight: 700;
-  border-radius: 3px;
+  border-radius: 2px;
   transition: all 0.4s ease;
 }
 
 .code-slot.unlocked {
-  background: rgba(255, 30, 56, 0.16);
-  border-color: var(--red-thread);
-  color: #ffffff;
-  text-shadow: 0 0 8px var(--red-thread);
-  box-shadow: 0 0 12px rgba(255, 30, 56, 0.35);
+  background: #fffdf7;
+  border: 1px solid var(--red-thread);
+  color: var(--red-thread);
+  font-family: 'Special Elite', 'IBM Plex Mono', monospace;
+  transform: rotate(-1deg);
+  box-shadow: 0 2px 6px rgba(201, 24, 43, 0.22);
 }
 
-/* Доска расследования (адаптивная сетка с точными координатами 360x720) */
+/* ЖИВОЙ СТОЛ (760px по высоте для свободной раскладки улик) */
 .board-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 8px 0 24px;
+  padding: 6px 0 28px;
+  position: relative;
+  z-index: 2;
 }
 
 .board-container {
   position: relative;
   width: 360px;
-  height: 720px;
+  height: 760px;
   margin: 0 auto;
   user-select: none;
+}
+
+/* Пометки карандашом прямо на матовой бумаге стола */
+.desk-pencil-note {
+  position: absolute;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: rgba(68, 57, 44, 0.48);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.note-top {
+  top: 6px;
+  right: 14px;
+  transform: rotate(2deg);
+}
+
+.note-mid {
+  top: 238px;
+  right: 18px;
+  transform: rotate(-3deg);
+}
+
+.note-bot {
+  top: 500px;
+  right: 16px;
+  transform: rotate(2.5deg);
 }
 
 .threads-svg {
   position: absolute;
   inset: 0;
   width: 360px;
-  height: 720px;
-  z-index: 1;
+  height: 760px;
+  z-index: 3;
   pointer-events: none;
 }
 
 .thread-line {
-  stroke: #2a2e39;
-  stroke-width: 2;
-  stroke-dasharray: 6 6;
+  stroke: rgba(92, 83, 71, 0.42);
+  stroke-width: 1.8;
+  stroke-dasharray: 5 5;
   fill: none;
   transition: stroke 0.6s ease, filter 0.6s ease;
 }
 
 .thread-line.active {
   stroke: var(--red-thread);
-  stroke-width: 3.2;
+  stroke-width: 2.8;
   stroke-dasharray: none;
-  filter: drop-shadow(0 0 6px var(--red-thread));
+  filter: drop-shadow(0 2px 3px rgba(120, 12, 24, 0.45));
 }
 
 .nodes-layer {
   position: relative;
   width: 360px;
-  height: 720px;
+  height: 760px;
   z-index: 2;
 }
 
-/* Карточки-улики на доске */
+/* РАЗНОФОРМАТНЫЕ УЛИКИ НА ЖИВОМ СТОЛЕ */
 .board-node {
   position: absolute;
-  width: 156px;
-  background: var(--card-dark);
-  border: 1px solid var(--card-border);
-  border-radius: 4px;
-  padding: 12px 10px 10px;
+  width: 160px;
+  padding: 13px 11px 11px;
   cursor: pointer;
-  transition: transform 0.2s ease, filter 0.45s ease, border-color 0.4s ease;
+  transition: transform 0.25s ease, filter 0.5s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 14px rgba(42, 33, 22, 0.26);
 }
 
 .board-node:active {
-  transform: scale(0.97);
+  transform: scale(0.97) !important;
 }
 
+/* 1. Вырванный блокнотный листок (Пролог) */
+.shape-note {
+  background: #fdf9ee;
+  background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 17px, rgba(93, 138, 168, 0.22) 18px);
+  border: 1px solid #d1c7b2;
+  border-left: 3px solid #d97b7b;
+  border-radius: 2px;
+}
+
+/* 2. Полароид-снимок (Стендап с душком) */
+.shape-polaroid {
+  background: #fcfaf4;
+  border: 1px solid #cfc4ae;
+  border-bottom: 14px solid #f4ede0;
+  border-radius: 2px;
+}
+
+/* 3. Кассета VHS / Архивная карточка (Бригада) */
+.shape-cassette {
+  background: #262320;
+  color: #f4ede0;
+  border: 2px solid #453f39;
+  border-top: 8px solid #b82937;
+  border-radius: 4px;
+}
+.shape-cassette .node-name {
+  color: #fffaf0;
+}
+.shape-cassette .node-status {
+  color: #cfc3b0;
+}
+
+/* 4. Старый кинобилет с перфорацией (Билет в прошлое) */
+.shape-ticket {
+  background: #ebd3a7;
+  border: 1.5px dashed #8c6d3f;
+  border-radius: 6px;
+}
+
+/* 5. Бланк радиоперехвата (Частота BTS & Cortis) */
+.shape-radio {
+  background: #ebe7dc;
+  border: 1px solid #8f897a;
+  border-top: 4px double #3b3730;
+  border-radius: 1px;
+}
+
+/* 6. Крафтовый конверт с сургучной печатью (Финал) */
+.shape-envelope {
+  background: #d9b98c;
+  border: 1px solid #9c7a4c;
+  border-radius: 3px;
+}
+
+/* ЭФФЕКТ ФОТОНЕГАТИВА ДЛЯ НЕРАСКРЫТЫХ УЛИК */
 .board-node.locked {
-  filter: invert(0.88) grayscale(1) contrast(1.15) opacity(0.38);
+  filter: invert(0.92) hue-rotate(185deg) contrast(1.1) opacity(0.72);
   cursor: not-allowed;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
+/* Активная улика пульсирует красным ореолом */
 .board-node.available {
-  border-color: var(--red-thread);
-  box-shadow: 0 0 18px rgba(255, 30, 56, 0.38);
-  animation: pulseNode 2s infinite;
+  box-shadow: 0 8px 22px rgba(201, 24, 43, 0.42), 0 0 0 2px var(--red-thread);
+  z-index: 4;
 }
 
 .board-node.completed {
-  border-color: #556078;
-  background: #1a1e26;
+  opacity: 0.96;
 }
 
-@keyframes pulseNode {
-  0%, 100% { box-shadow: 0 0 10px rgba(255, 30, 56, 0.3); }
-  50% { box-shadow: 0 0 22px rgba(255, 30, 56, 0.75); }
-}
-
+/* Канцелярская кнопка (Pin) */
 .pin {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #3d4352;
-  border: 2px solid #0b0c0e;
+  background: radial-gradient(circle at 35% 35%, #8a7f70, #4a433b);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
   position: absolute;
-  top: -7px;
+  top: -6px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 5;
 }
 
 .board-node.available .pin,
 .board-node.completed .pin {
-  background: var(--red-thread);
-  box-shadow: 0 0 8px var(--red-thread);
+  background: radial-gradient(circle at 35% 35%, #ff6373, var(--red-thread) 65%, #7a0915);
+}
+
+/* Полоска полупрозрачного скотча на части карточек */
+.scotch-tape {
+  position: absolute;
+  top: -7px;
+  right: 12px;
+  width: 34px;
+  height: 12px;
+  background: var(--tape-yellow);
+  border-left: 1px dotted rgba(150, 130, 80, 0.4);
+  border-right: 1px dotted rgba(150, 130, 80, 0.4);
+  transform: rotate(12deg);
+  pointer-events: none;
 }
 
 .node-step {
   font-size: 9px;
   color: var(--red-thread);
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   letter-spacing: 0.5px;
 }
 
+.shape-cassette .node-step {
+  color: #ff6b7a;
+}
+
 .node-name {
-  font-size: 12px;
+  font-family: 'Special Elite', 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
   font-weight: 700;
-  line-height: 1.3;
-  color: #fff;
+  line-height: 1.25;
+  color: var(--ink-dark);
+}
+
+.node-handnote {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: #635646;
+  margin-top: 3px;
+  line-height: 1.1;
+}
+
+.shape-cassette .node-handnote {
+  color: #d4c7b4;
 }
 
 .node-status {
   margin-top: 6px;
-  font-size: 10px;
-  color: var(--text-muted);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--ink-muted);
 }
 
-/* Модальное окно дела */
+/* МОДАЛЬНОЕ ОКНО КАРТОЧКИ ДОСЬЕ (ТАКЖЕ В СТИЛЕ АРХИВНОГО ЛИСТА) */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(5, 6, 8, 0.88);
-  backdrop-filter: blur(6px);
+  background: rgba(24, 19, 14, 0.78);
+  backdrop-filter: blur(4px);
   z-index: 50;
   display: flex;
   align-items: flex-end;
@@ -499,26 +629,29 @@ body {
   max-width: 420px;
   max-height: 92vh;
   overflow-y: auto;
-  background: #14161b;
-  border: 1px solid #353a47;
-  border-top: 3px solid var(--red-thread);
-  border-radius: 8px;
+  background: #f5efe2;
+  background-image: linear-gradient(180deg, #f8f3e8 0%, #ebe1cc 100%);
+  color: var(--ink-dark);
+  border: 1px solid #b5a689;
+  border-top: 4px solid var(--red-thread);
+  border-radius: 6px;
   padding: 18px 16px 22px;
   position: relative;
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.65);
 }
 
 .close-btn {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: #222630;
-  border: 1px solid #3a4050;
-  color: #fff;
+  background: #e3d8c1;
+  border: 1px solid #a6987e;
+  color: var(--ink-dark);
   width: 32px;
   height: 32px;
   border-radius: 50%;
   font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -526,24 +659,27 @@ body {
   font-size: 10px;
   color: var(--red-thread);
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
 }
 
 .dossier-title {
-  font-size: 17px;
+  font-family: 'Special Elite', 'IBM Plex Mono', monospace;
+  font-size: 18px;
   margin-top: 4px;
-  margin-bottom: 14px;
-  padding-right: 32px;
+  margin-bottom: 12px;
+  padding-right: 34px;
+  color: #181411;
 }
 
-/* Цветной Полароид */
+/* Полароид внутри дела */
 .polaroid-frame {
-  background: var(--paper-color);
-  padding: 10px 10px 8px;
+  background: #ffffff;
+  padding: 9px 9px 8px;
+  border: 1px solid #cfc4ae;
   border-radius: 2px;
   transform: rotate(-1deg);
-  margin-bottom: 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  margin-bottom: 14px;
+  box-shadow: 0 5px 14px rgba(42, 33, 22, 0.22);
 }
 
 .polaroid-image {
@@ -573,35 +709,37 @@ body {
 
 .polaroid-caption {
   font-family: 'Caveat', cursive;
-  color: var(--ink-dark);
+  color: #1f1b18;
   font-size: 20px;
   font-weight: 700;
   text-align: center;
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
-/* Кассетный диктофон */
+/* Кассетный диктофон Электроника-302 (контрастный ретро-корпус на бумаге) */
 .cassette-player {
-  background: #1e2128;
-  border: 1px solid #3c4252;
+  background: #262320;
+  color: #f2eadc;
+  border: 2px solid #4a433b;
   border-radius: 6px;
   padding: 10px 12px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(34, 26, 18, 0.25);
 }
 
 .cassette-top {
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: #9ba3b5;
+  color: #cbbda6;
   margin-bottom: 8px;
 }
 
 .cassette-window {
-  background: #0d0f12;
-  border: 1px solid #2d323e;
+  background: #141210;
+  border: 1px solid #3d3730;
   border-radius: 4px;
-  height: 44px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -610,8 +748,8 @@ body {
 }
 
 .reel {
-  font-size: 24px;
-  color: #d49b4b;
+  font-size: 23px;
+  color: #e0a653;
   display: inline-block;
   line-height: 1;
 }
@@ -627,7 +765,7 @@ body {
 .tape-middle {
   flex: 1;
   height: 6px;
-  background: #271811;
+  background: #2e1d14;
   margin: 0 14px;
   border-radius: 3px;
   overflow: hidden;
@@ -636,15 +774,15 @@ body {
 .tape-progress-bar {
   width: 0%;
   height: 100%;
-  background: var(--red-thread);
+  background: var(--red-bright);
   transition: width 0.2s linear;
 }
 
 .tape-btn {
   width: 100%;
-  background: #2b303b;
-  border: 1px solid #4a5264;
-  color: #fff;
+  background: #38332e;
+  border: 1px solid #635a50;
+  color: #fffaf0;
   padding: 9px;
   font-family: inherit;
   font-size: 11px;
@@ -655,13 +793,13 @@ body {
 
 .tape-btn.playing {
   background: var(--red-thread);
-  border-color: var(--red-thread);
+  border-color: #ff6b7a;
 }
 
 .audio-status-hint {
   margin-top: 6px;
   font-size: 11px;
-  color: #ffb142;
+  color: #ffc069;
   text-align: center;
 }
 
@@ -669,21 +807,21 @@ body {
   display: none;
 }
 
-/* Текст и квиз */
+/* Текст дела и варианты ответа */
 .dossier-desc {
-  font-size: 13px;
-  line-height: 1.5;
-  color: #cfd5e2;
+  font-size: 12.5px;
+  line-height: 1.52;
+  color: #2b2520;
   margin-bottom: 14px;
 }
 
 .quiz-question {
   font-size: 13px;
   font-weight: 700;
-  color: #ffffff;
+  color: #181411;
   margin-bottom: 10px;
-  padding-left: 8px;
-  border-left: 2px solid var(--red-thread);
+  padding-left: 9px;
+  border-left: 3px solid var(--red-thread);
 }
 
 .options-list {
@@ -693,9 +831,9 @@ body {
 }
 
 .option-btn {
-  background: #1b1e26;
-  border: 1px solid #353b4a;
-  color: var(--text-main);
+  background: #fbf8f1;
+  border: 1px solid #b5a689;
+  color: var(--ink-dark);
   padding: 11px 12px;
   text-align: left;
   font-family: inherit;
@@ -703,26 +841,29 @@ body {
   line-height: 1.35;
   border-radius: 4px;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(45, 36, 25, 0.08);
   transition: all 0.2s;
 }
 
 .option-btn.wrong {
-  border-color: #ff4d4d;
-  background: rgba(255, 77, 77, 0.16);
+  border-color: var(--red-thread);
+  background: rgba(201, 24, 43, 0.14);
   animation: shake 0.35s;
 }
 
 .option-btn.correct {
-  border-color: #2ecc71;
+  border-color: #1e7e34;
   background: rgba(46, 204, 113, 0.22);
-  color: #fff;
+  color: #103b19;
+  font-weight: 700;
 }
 
 .feedback-msg {
   margin-top: 10px;
   font-size: 12px;
+  font-weight: 600;
   min-height: 18px;
-  color: #ff6b7a;
+  color: var(--red-thread);
 }
 
 .primary-action-btn {
@@ -730,15 +871,15 @@ body {
   margin-top: 12px;
   padding: 13px;
   background: var(--red-thread);
-  color: #fff;
+  color: #fffaf2;
   border: none;
   border-radius: 4px;
   font-family: inherit;
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   cursor: pointer;
-  box-shadow: 0 0 16px var(--red-glow);
+  box-shadow: 0 4px 14px rgba(201, 24, 43, 0.4);
 }
 
 .primary-action-btn.hidden {
@@ -747,21 +888,22 @@ body {
 
 /* Финальный вердикт */
 .final-banner {
-  background: rgba(255, 30, 56, 0.14);
+  background: #fbf6ea;
   border: 2px solid var(--red-thread);
   padding: 14px;
-  border-radius: 6px;
+  border-radius: 5px;
   text-align: center;
   margin-top: 10px;
+  box-shadow: 0 4px 14px rgba(201, 24, 43, 0.18);
 }
 
 .final-phrase {
+  font-family: 'Special Elite', 'IBM Plex Mono', monospace;
   font-size: 17px;
   font-weight: 700;
-  color: #fff;
+  color: var(--red-thread);
   margin: 10px 0;
   letter-spacing: 0.5px;
-  text-shadow: 0 0 10px var(--red-thread);
 }
 
 /* Анимация поезда */
@@ -773,7 +915,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 0, 0, 0.92);
+  background: rgba(20, 4, 6, 0.92);
   overflow: hidden;
   padding: 16px;
   text-align: center;
@@ -786,7 +928,7 @@ body {
 .red-strobe {
   position: absolute;
   inset: 0;
-  background: var(--red-thread);
+  background: var(--red-bright);
   opacity: 0;
   animation: strobe 0.25s infinite;
 }
@@ -802,12 +944,13 @@ body {
   align-items: center;
   font-size: 24px;
   font-weight: 700;
-  background: #111;
-  border: 3px solid var(--red-thread);
+  color: #fff;
+  background: #141210;
+  border: 3px solid var(--red-bright);
   padding: 16px 24px;
   border-radius: 8px;
   white-space: nowrap;
-  box-shadow: 0 0 40px var(--red-thread);
+  box-shadow: 0 0 40px var(--red-bright);
   animation: trainRush 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
@@ -823,7 +966,7 @@ body {
   font-size: 14px;
   font-weight: 700;
   color: #fff;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
   z-index: 2;
 }
 

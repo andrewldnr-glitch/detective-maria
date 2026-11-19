@@ -7,14 +7,16 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="vhs-grain"></div>
+  <!-- Эффект лампы, бумажной фактуры и виньетки -->
+  <div class="lamp-glow"></div>
+  <div class="paper-grain"></div>
   <div class="vignette"></div>
 
-  <!-- Загрузочный экран (Секретная папка + GIF-досье Детектива Марии + разблокировка фонового звука) -->
+  <!-- ЗАГРУЗОЧНЫЙ ЭКРАН (Архивная папка + встроенная GIF Детектива Марии) -->
   <div id="splash-screen" class="splash-screen">
     <div class="splash-folder">
       <div class="folder-tab">АРХИВ МВД • 1988</div>
@@ -22,7 +24,7 @@
       <h1 class="splash-title">ДЕЛО № 08-11</h1>
       <p class="splash-subtitle">О ПОХИЩЕНИИ ГЛАВНОГО КОНВЕРТА</p>
 
-      <!-- Анимированное досье Детектива Марии (подхватывает detective.gif, detective.mp4 или detective.jpg) -->
+      <!-- Полароид-карточка с встроенной GIF-анимацией -->
       <div class="splash-avatar-frame" id="splash-avatar-frame">
         <div class="avatar-pin"></div>
         <img id="splash-avatar-img" class="splash-avatar-media" src="assets/detective.gif" alt="Детектив Мария" />
@@ -32,9 +34,9 @@
       </div>
 
       <div class="splash-terminal" id="splash-terminal">
-        <div class="term-line" id="term-line-1">> Инициализация фотолаборатории...</div>
-        <div class="term-line hidden" id="term-line-2">> Проявка негативов: 6 улик найдено...</div>
-        <div class="term-line hidden" id="term-line-3">> Настройка частоты «Электроника-302»...</div>
+        <div class="term-line" id="term-line-1">> Подготовка архивного стола...</div>
+        <div class="term-line hidden" id="term-line-2">> Разложены 6 улик и красный шнур...</div>
+        <div class="term-line hidden" id="term-line-3">> Заряжена кассета «Электроника-302»...</div>
         <div class="term-line hidden" id="term-line-4">> Доступ разрешён: ДЕТЕКТИВ МАРИЯ</div>
       </div>
 
@@ -52,7 +54,6 @@
   <div id="train-overlay" class="train-overlay hidden" aria-hidden="true">
     <div class="red-strobe"></div>
     <div id="train-entity" class="train-entity">
-      <div class="train-headlight"></div>
       <div class="train-body">🚂 ЭКСПРЕСС № 666</div>
     </div>
     <div class="train-caption">⚠️ ОУ, ЧЁРТ ВОЗЬМИ, ОТКУДА ЗДЕСЬ ЭТОТ ПОЕЗД?! ⚠️</div>
@@ -61,7 +62,7 @@
   <!-- Фоновая детективная музыка -->
   <audio id="bg-music" src="assets/bgm.mp3" loop preload="auto"></audio>
 
-  <!-- Верхняя панель: Статус дела, Кнопка фоновой музыки и Шифр сейфа -->
+  <!-- Верхняя панель: Бирка дела + Шифр сейфа на перфокарте -->
   <header class="case-header">
     <div class="case-title-row">
       <div class="title-left">
@@ -72,7 +73,7 @@
       <span class="stamp-secret">СЕКРЕТНО</span>
     </div>
     <div class="safe-code-box">
-      <div class="safe-label">ШИФР СЕЙФА (КОДОВАЯ ФРАЗА):</div>
+      <div class="safe-label">КОДОВАЯ ФРАЗА СЕЙФА (ОТПЕЧАТОК ЛИТЕР):</div>
       <div class="code-slots" id="code-slots">
         <div class="code-slot" data-word="ВИСКА">????</div>
         <div class="code-slot" data-word="БАРСА">????</div>
@@ -82,22 +83,26 @@
     </div>
   </header>
 
-  <!-- Доска расследования с красной нитью -->
+  <!-- ЖИВОЙ СТОЛ НА МАТОВОЙ АРХИВНОЙ БУМАГЕ -->
   <main class="board-wrapper">
     <div class="board-container" id="board-container">
-      <svg class="threads-svg" id="threads-svg" viewBox="0 0 360 720" preserveAspectRatio="none">
-        <!-- Нити рисуются динамически через JS -->
-      </svg>
+      <!-- Фоновые пометки карандашом на бумаге -->
+      <div class="desk-pencil-note note-top">Арх. лист № 1988-М • Не сгибать</div>
+      <div class="desk-pencil-note note-mid">Сверить показания Кучерявого!</div>
+      <div class="desk-pencil-note note-bot">Улика № 5 → проверить частоту</div>
 
-      <div class="nodes-layer" id="nodes-layer">
-        <!-- Карточки этапов генерируются через JS -->
-      </div>
+      <!-- Провисающие красные нити (кривые Безье) -->
+      <svg class="threads-svg" id="threads-svg" viewBox="0 0 360 760" preserveAspectRatio="none"></svg>
+
+      <!-- Разноформатные карточки-улики на столе -->
+      <div class="nodes-layer" id="nodes-layer"></div>
     </div>
   </main>
 
   <!-- Модальное окно активного этапа (Допрос / Улика) -->
   <div id="stage-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
     <div class="dossier-card">
+      <div class="dossier-clip"></div>
       <button id="close-modal" class="close-btn" aria-label="Закрыть">✕</button>
       
       <div class="dossier-header">
@@ -105,7 +110,7 @@
         <h2 id="modal-title" class="dossier-title">Название этапа</h2>
       </div>
 
-      <!-- Цветной полароид (поддерживает и фото из assets, и ретро-иллюстрацию) -->
+      <!-- Полароид -->
       <div class="polaroid-frame">
         <div id="polaroid-art" class="polaroid-image">
           <img id="polaroid-img" class="polaroid-real-img hidden" alt="Улика" />

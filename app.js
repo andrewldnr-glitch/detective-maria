@@ -3,24 +3,24 @@ if (tg) {
   tg.ready();
   tg.expand();
   try {
-    tg.setHeaderColor('#0b0c0e');
-    tg.setBackgroundColor('#0b0c0e');
+    tg.setHeaderColor('#e6dcc6');
+    tg.setBackgroundColor('#dfd5c0');
   } catch (e) {}
 }
 
-const STORAGE_KEY = 'detective_maria_state_v3';
+const STORAGE_KEY = 'detective_maria_state_v4';
 
-// Конфигурация 6 этапов расследования
-// Анимация на загрузочном экране: assets/detective.gif (также поддерживает assets/detective.mp4 или assets/detective.jpg)
-// Фоновая музыка: assets/bgm.mp3
-// Голосовые улики: assets/stage1.mp3 ... assets/stage6.mp3
-// Опциональные фото на полароиды: assets/photo1.jpg ... assets/photo6.jpg
+// Конфигурация 6 разноформатных улик на «живом столе»
 const STAGES = [
   {
     id: 0,
     tag: 'ПРОЛОГ • МЕСТО ПРЕСТУПЛЕНИЯ',
     boardTitle: 'Взлом сейфа',
-    x: 16, y: 18,
+    handNote: 'Записка с места кражи',
+    shapeClass: 'shape-note',
+    hasTape: true,
+    rotate: -2.2,
+    x: 14, y: 22,
     audio: 'assets/stage1.mp3',
     photo: 'assets/photo1.jpg',
     emoji: '🕵️‍♀️📁',
@@ -34,7 +34,11 @@ const STAGES = [
     id: 1,
     tag: 'УЛИКА №1 • ДОПРОС СВИДЕТЕЛЯ',
     boardTitle: 'Стендап с душком',
-    x: 188, y: 125,
+    handNote: 'Фото из зала (сомнительно)',
+    shapeClass: 'shape-polaroid',
+    hasTape: false,
+    rotate: 2.5,
+    x: 186, y: 122,
     audio: 'assets/stage2.mp3',
     photo: 'assets/photo2.jpg',
     emoji: '🎤💩',
@@ -53,7 +57,11 @@ const STAGES = [
     id: 2,
     tag: 'УЛИКА №2 • АРХИВ VHS',
     boardTitle: 'Дело «Бригада»',
-    x: 16, y: 245,
+    handNote: 'Кассета зажёвана на 18+',
+    shapeClass: 'shape-cassette',
+    hasTape: false,
+    rotate: -1.8,
+    x: 16, y: 252,
     audio: 'assets/stage3.mp3',
     photo: 'assets/photo3.jpg',
     emoji: '📼🔞',
@@ -72,7 +80,11 @@ const STAGES = [
     id: 3,
     tag: 'УЛИКА №3 • АРХИВ 8 ЛЕТ',
     boardTitle: 'Билет в прошлое',
-    x: 188, y: 365,
+    handNote: 'Контроль • 8 лет назад',
+    shapeClass: 'shape-ticket',
+    hasTape: true,
+    rotate: 2.1,
+    x: 186, y: 376,
     audio: 'assets/stage4.mp3',
     photo: 'assets/photo4.jpg',
     emoji: '🎟️🕰️',
@@ -91,7 +103,11 @@ const STAGES = [
     id: 4,
     tag: 'УЛИКА №4 • РАДИОПЕРЕХВАТ',
     boardTitle: 'Частота BTS & Cortis',
-    x: 16, y: 485,
+    handNote: 'Внимание: шум на путях!',
+    shapeClass: 'shape-radio',
+    hasTape: false,
+    rotate: -2.4,
+    x: 16, y: 502,
     audio: 'assets/stage5.mp3',
     photo: 'assets/photo5.jpg',
     emoji: '📻💜',
@@ -111,7 +127,11 @@ const STAGES = [
     id: 5,
     tag: 'ФИНАЛ • ДЕЛО ЗАКРЫТО',
     boardTitle: 'Вердикт и Конверт',
-    x: 188, y: 595,
+    handNote: 'Лично в руки имениннице',
+    shapeClass: 'shape-envelope',
+    hasTape: true,
+    rotate: 1.6,
+    x: 186, y: 622,
     audio: 'assets/stage6.mp3',
     photo: 'assets/photo6.jpg',
     emoji: '✉️❤️',
@@ -127,7 +147,6 @@ let unlockedWords = [false, false, false, false];
 let activeStage = null;
 let isAdvancing = false;
 
-// Состояние фоновой музыки (bgm.mp3)
 let bgmEnabled = true;
 const BGM_DEFAULT_VOL = 0.35;
 
@@ -145,21 +164,18 @@ const progressBarEl = document.getElementById('tape-progress-bar');
 const audioHintEl = document.getElementById('audio-status-hint');
 const tapeFileLabel = document.getElementById('tape-file-label');
 
-// --- АВТОПОДХВАТ GIF / MP4 / JPG НА ЗАГРУЗОЧНОМ ЭКРАНЕ ---
+// Автоподхват GIF / JPG / MP4 на загрузочном экране
 function initSplashAvatarMedia() {
   const imgEl = document.getElementById('splash-avatar-img');
   const videoEl = document.getElementById('splash-avatar-video');
   const fallbackEl = document.getElementById('splash-avatar-fallback');
 
-  // Сначала пробуем загрузить assets/detective.gif
   imgEl.onerror = () => {
-    // Если detective.gif не найден или ещё не добавлен, проверяем detective.jpg
     if (!imgEl.dataset.triedJpg) {
       imgEl.dataset.triedJpg = 'true';
       imgEl.src = 'assets/detective.jpg';
       return;
     }
-    // Если нет и jpg, пробуем видео detective.mp4 (на случай если скачал как mp4)
     imgEl.classList.add('hidden');
     videoEl.classList.remove('hidden');
     videoEl.onerror = () => {
@@ -170,7 +186,6 @@ function initSplashAvatarMedia() {
   };
 }
 
-// --- ЭКРАН ЗАГРУЗКИ (ПРОЯВКА АРХИВА) ---
 function initSplashScreen() {
   initSplashAvatarMedia();
 
@@ -210,7 +225,6 @@ function initSplashScreen() {
   });
 }
 
-// --- УПРАВЛЕНИЕ ФОНОВОЙ МУЗЫКОЙ (АВТО-ПРИГЛУШЕНИЕ ПРИ ГОЛОСОВЫХ) ---
 function startBackgroundMusic() {
   if (!bgmEnabled) return;
   bgMusicEl.volume = BGM_DEFAULT_VOL;
@@ -246,7 +260,6 @@ bgmToggleBtn.addEventListener('click', () => {
   }
 });
 
-// Загрузка и сохранение прогресса
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -302,7 +315,7 @@ function formatTime(sec) {
   return `${mins}:${secs}`;
 }
 
-// Отрисовка доски и красных нитей
+// Отрисовка живого стола: провисающие красные нити (кривые Безье) + разноформатные улики
 function renderBoard() {
   boardNodesEl.innerHTML = '';
   threadsSvgEl.innerHTML = '';
@@ -311,23 +324,30 @@ function renderBoard() {
   for (let i = 0; i < STAGES.length - 1; i++) {
     const curr = STAGES[i];
     const next = STAGES[i + 1];
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', curr.x + 78);
-    line.setAttribute('y1', curr.y);
-    line.setAttribute('x2', next.x + 78);
-    line.setAttribute('y2', next.y);
-    line.classList.add('thread-line');
+    const x1 = curr.x + 80;
+    const y1 = curr.y;
+    const x2 = next.x + 80;
+    const y2 = next.y;
+
+    // Контрольная точка для естественного провисания нити на столе
+    const cx = (x1 + x2) / 2;
+    const cy = Math.max(y1, y2) + 22;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`);
+    path.classList.add('thread-line');
     if (i < currentUnlockedStage) {
-      line.classList.add('active');
+      path.classList.add('active');
     }
-    threadsSvgEl.appendChild(line);
+    threadsSvgEl.appendChild(path);
   }
 
   STAGES.forEach((stage) => {
     const node = document.createElement('div');
-    node.className = 'board-node';
+    node.className = `board-node ${stage.shapeClass}`;
     node.style.left = `${stage.x}px`;
     node.style.top = `${stage.y}px`;
+    node.style.transform = `rotate(${stage.rotate}deg)`;
 
     if (stage.id < currentUnlockedStage) {
       node.classList.add('completed');
@@ -338,15 +358,19 @@ function renderBoard() {
     }
 
     const statusText = stage.id < currentUnlockedStage
-      ? '✓ РАСКРЫТО'
+      ? '✓ ПРОЯВЛЕНО'
       : stage.id === currentUnlockedStage
         ? '● АКТИВНАЯ УЛИКА'
-        : '🔒 В НЕГАТИВЕ';
+        : '🔒 НЕГАТИВ';
+
+    const tapeHtml = stage.hasTape ? '<div class="scotch-tape"></div>' : '';
 
     node.innerHTML = `
       <div class="pin"></div>
-      <div class="node-step">ЭТАП 0${stage.id + 1}</div>
+      ${tapeHtml}
+      <div class="node-step">УЛИКА 0${stage.id + 1}</div>
       <div class="node-name">${stage.boardTitle}</div>
+      <div class="node-handnote">${stage.handNote}</div>
       <div class="node-status">${statusText}</div>
     `;
 
@@ -363,7 +387,6 @@ function renderBoard() {
   });
 }
 
-// Открытие карточки этапа
 function openStageModal(stage) {
   activeStage = stage;
   isAdvancing = false;
@@ -421,9 +444,9 @@ function openStageModal(stage) {
     actionBtn.classList.add('hidden');
     finalContainer.innerHTML = `
       <div class="final-banner">
-        <div style="font-size: 11px; color: #ff6b7a;">КОДОВАЯ ФРАЗА ДЛЯ ПОЛУЧЕНИЯ КОНВЕРТА:</div>
+        <div style="font-size: 11px; color: #5c5347; font-weight: 700;">КОДОВАЯ ФРАЗА ДЛЯ ПОЛУЧЕНИЯ КОНВЕРТА:</div>
         <div class="final-phrase">«ВИСКА БАРСА И ВИСКА BTS»</div>
-        <div style="font-size: 12px; color: #ddd;">Подойди к главному подозреваемому и произнеси этот пароль вслух!</div>
+        <div style="font-size: 12px; color: #2b2520;">Подойди к главному подозреваемому и произнеси этот пароль вслух!</div>
       </div>
     `;
   } else {
@@ -445,14 +468,14 @@ function openStageModal(stage) {
           isAdvancing = true;
           haptic('success');
           btn.classList.add('correct');
-          feedbackMsg.style.color = '#2ecc71';
+          feedbackMsg.style.color = '#1e7e34';
           feedbackMsg.textContent = '✓ Улика подтверждена! Слово шифра открыто.';
           unlockCodeWord(stage.unlockWordIndex);
           setTimeout(() => completeCurrentStage(), 950);
         } else {
           haptic('error');
           btn.classList.add('wrong');
-          feedbackMsg.style.color = '#ff6b7a';
+          feedbackMsg.style.color = '#c9182b';
           feedbackMsg.textContent = opt.hint || 'Неверно, попробуй ещё раз!';
           setTimeout(() => btn.classList.remove('wrong'), 450);
         }
@@ -487,7 +510,6 @@ function completeCurrentStage() {
   }
 }
 
-// Управление кассетным плеером + авто-приглушение фоновой музыки + поезд
 playBtn.addEventListener('click', () => {
   if (audioEl.paused) {
     if (activeStage?.hasTrainEvent) {
