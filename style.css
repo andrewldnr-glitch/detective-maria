@@ -1,13 +1,11 @@
 :root {
   --paper-base: #dfd5c0;
-  --paper-shade: #cbbd9f;
   --paper-card: #f5efe2;
   --ink-dark: #1f1b18;
   --ink-muted: #5c5347;
   --red-thread: #c9182b;
   --red-bright: #e61c32;
-  --red-glow: rgba(201, 24, 43, 0.45);
-  --tape-yellow: rgba(232, 213, 152, 0.72);
+  --tape-yellow: rgba(232, 213, 152, 0.75);
 }
 
 * {
@@ -17,26 +15,26 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
+html, body {
+  width: 100%;
+  min-height: 100vh;
   background-color: var(--paper-base);
   background-image:
-    radial-gradient(circle at 50% 24%, rgba(255, 248, 231, 0.75) 0%, rgba(214, 199, 171, 0.55) 55%, rgba(158, 141, 114, 0.85) 100%),
-    repeating-linear-gradient(0deg, rgba(60, 48, 34, 0.03) 0px, rgba(60, 48, 34, 0.03) 1px, transparent 1px, transparent 26px);
+    radial-gradient(circle at 50% 22%, rgba(255, 249, 232, 0.8) 0%, rgba(216, 201, 173, 0.55) 55%, rgba(155, 137, 109, 0.88) 100%),
+    repeating-linear-gradient(0deg, rgba(60, 48, 34, 0.035) 0px, rgba(60, 48, 34, 0.035) 1px, transparent 1px, transparent 26px);
   color: var(--ink-dark);
   font-family: 'IBM Plex Mono', monospace;
-  min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-  padding-bottom: 36px;
 }
 
-/* Тёплый свет настольной лампы */
+/* Тёплый свет лампы */
 .lamp-glow {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  background: radial-gradient(circle at 50% 18%, rgba(255, 243, 210, 0.35), transparent 65%);
+  background: radial-gradient(circle at 50% 18%, rgba(255, 244, 214, 0.42), transparent 65%);
 }
 
 /* Фактура матовой архивной бумаги */
@@ -45,30 +43,32 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 90;
-  opacity: 0.07;
+  opacity: 0.075;
   background-image: radial-gradient(#2b2116 0.9px, transparent 0);
   background-size: 4px 4px;
 }
 
-/* Мягкое затемнение по краям стола */
 .vignette {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 89;
-  background: radial-gradient(circle at center, transparent 58%, rgba(45, 36, 25, 0.42) 100%);
+  background: radial-gradient(circle at center, transparent 56%, rgba(45, 36, 25, 0.42) 100%);
 }
 
-/* ЗАГРУЗОЧНЫЙ ЭКРАН (АРХИВНАЯ ПАПКА + GIF ДЕТЕКТИВА) */
+/* ЭКРАН ЗАГРУЗКИ (НА ВСЮ ШИРИНУ БЕЗ ЧЁРНЫХ ПОЛОС ПО БОКАМ) */
 .splash-screen {
   position: fixed;
   inset: 0;
   z-index: 85;
-  background: radial-gradient(circle at center, #383028 0%, #1a1612 100%);
+  background-color: var(--paper-base);
+  background-image:
+    radial-gradient(circle at 50% 22%, rgba(255, 249, 232, 0.85) 0%, rgba(212, 196, 167, 0.65) 58%, rgba(146, 128, 100, 0.9) 100%),
+    repeating-linear-gradient(0deg, rgba(60, 48, 34, 0.035) 0px, rgba(60, 48, 34, 0.035) 1px, transparent 1px, transparent 26px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px;
+  padding: 16px 12px;
   overflow-y: auto;
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
@@ -81,15 +81,15 @@ body {
 
 .splash-folder {
   width: 100%;
-  max-width: 360px;
-  background: #e9dfc9;
-  background-image: linear-gradient(180deg, #efe6d3 0%, #dfd2b6 100%);
+  max-width: 380px;
+  background: #f3ecdc;
+  background-image: linear-gradient(180deg, #f8f3e8 0%, #e4d8be 100%);
   border: 1px solid #b5a689;
   border-top: 5px solid var(--red-thread);
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 20px 16px 18px;
   position: relative;
-  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.78), inset 0 0 30px rgba(139, 118, 86, 0.2);
+  box-shadow: 0 14px 36px rgba(34, 26, 18, 0.35);
   text-align: center;
   color: var(--ink-dark);
 }
@@ -98,14 +98,14 @@ body {
   position: absolute;
   top: -22px;
   left: 14px;
-  background: #d8c9ab;
+  background: #dfd2b6;
   border: 1px solid #b5a689;
   border-bottom: none;
   color: var(--ink-dark);
   font-size: 10px;
   font-weight: 700;
   padding: 4px 10px;
-  border-radius: 5px 5px 0 0;
+  border-radius: 4px 4px 0 0;
   letter-spacing: 0.8px;
 }
 
@@ -120,7 +120,6 @@ body {
   transform: rotate(-2.5deg);
   letter-spacing: 1.5px;
   margin-bottom: 8px;
-  opacity: 0.9;
 }
 
 .splash-title {
@@ -139,17 +138,17 @@ body {
   margin-bottom: 12px;
 }
 
-/* Полароид-рамка с GIF-анимацией Детектива Марии */
+/* Полароид с GIF-анимацией Детектива Марии */
 .splash-avatar-frame {
   position: relative;
   width: 162px;
   height: 215px;
   margin: 0 auto 14px;
-  background: #fbf8f1;
+  background: #ffffff;
   padding: 7px 7px 28px;
   border-radius: 2px;
-  transform: rotate(-1.8deg);
-  box-shadow: 0 8px 20px rgba(34, 26, 18, 0.45);
+  transform: rotate(-1.5deg);
+  box-shadow: 0 8px 20px rgba(34, 26, 18, 0.32);
   border: 1px solid #c9bea8;
 }
 
@@ -158,7 +157,7 @@ body {
   height: 14px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ff5e6e, var(--red-thread) 65%, #7a0915);
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
   position: absolute;
   top: -7px;
   left: 50%;
@@ -172,7 +171,7 @@ body {
   object-fit: cover;
   border: 1px solid #b8ad98;
   display: block;
-  background: #1a1816;
+  background: #231f1b;
 }
 
 .splash-avatar-media.hidden {
@@ -205,7 +204,7 @@ body {
 }
 
 .splash-terminal {
-  background: #f7f2e7;
+  background: #fbf8f1;
   border: 1px dashed #9e9178;
   border-radius: 3px;
   padding: 9px 11px;
@@ -263,7 +262,7 @@ body {
   color: #fffaf2;
   border-color: #9c0f1e;
   cursor: pointer;
-  box-shadow: 0 5px 16px rgba(201, 24, 43, 0.45);
+  box-shadow: 0 5px 16px rgba(201, 24, 43, 0.38);
 }
 
 /* ВЕРХНЯЯ ПАНЕЛЬ НА БУМАЖНОМ СТОЛЕ */
@@ -271,7 +270,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(230, 220, 198, 0.94);
+  background: rgba(235, 226, 206, 0.95);
   backdrop-filter: blur(6px);
   border-bottom: 2px solid #b5a689;
   box-shadow: 0 4px 14px rgba(45, 36, 25, 0.14);
@@ -373,12 +372,12 @@ body {
   box-shadow: 0 2px 6px rgba(201, 24, 43, 0.22);
 }
 
-/* ЖИВОЙ СТОЛ (760px по высоте для свободной раскладки улик) */
+/* ЖИВОЙ СТОЛ */
 .board-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 6px 0 28px;
+  padding: 6px 0 32px;
   position: relative;
   z-index: 2;
 }
@@ -391,33 +390,18 @@ body {
   user-select: none;
 }
 
-/* Пометки карандашом прямо на матовой бумаге стола */
 .desk-pencil-note {
   position: absolute;
   font-family: 'Caveat', cursive;
   font-size: 16px;
-  color: rgba(68, 57, 44, 0.48);
+  color: rgba(68, 57, 44, 0.52);
   pointer-events: none;
   z-index: 1;
 }
 
-.note-top {
-  top: 6px;
-  right: 14px;
-  transform: rotate(2deg);
-}
-
-.note-mid {
-  top: 238px;
-  right: 18px;
-  transform: rotate(-3deg);
-}
-
-.note-bot {
-  top: 500px;
-  right: 16px;
-  transform: rotate(2.5deg);
-}
+.note-top { top: 6px; right: 14px; transform: rotate(2deg); }
+.note-mid { top: 238px; right: 18px; transform: rotate(-3deg); }
+.note-bot { top: 500px; right: 16px; transform: rotate(2.5deg); }
 
 .threads-svg {
   position: absolute;
@@ -429,7 +413,7 @@ body {
 }
 
 .thread-line {
-  stroke: rgba(92, 83, 71, 0.42);
+  stroke: rgba(92, 83, 71, 0.45);
   stroke-width: 1.8;
   stroke-dasharray: 5 5;
   fill: none;
@@ -450,7 +434,7 @@ body {
   z-index: 2;
 }
 
-/* РАЗНОФОРМАТНЫЕ УЛИКИ НА ЖИВОМ СТОЛЕ */
+/* РАЗНОФОРМАТНЫЕ КАРТОЧКИ-УЛИКИ НА ЖИВОМ СТОЛЕ */
 .board-node {
   position: absolute;
   width: 160px;
@@ -464,7 +448,6 @@ body {
   transform: scale(0.97) !important;
 }
 
-/* 1. Вырванный блокнотный листок (Пролог) */
 .shape-note {
   background: #fdf9ee;
   background-image: repeating-linear-gradient(180deg, transparent 0px, transparent 17px, rgba(93, 138, 168, 0.22) 18px);
@@ -473,7 +456,6 @@ body {
   border-radius: 2px;
 }
 
-/* 2. Полароид-снимок (Стендап с душком) */
 .shape-polaroid {
   background: #fcfaf4;
   border: 1px solid #cfc4ae;
@@ -481,7 +463,6 @@ body {
   border-radius: 2px;
 }
 
-/* 3. Кассета VHS / Архивная карточка (Бригада) */
 .shape-cassette {
   background: #262320;
   color: #f4ede0;
@@ -489,21 +470,15 @@ body {
   border-top: 8px solid #b82937;
   border-radius: 4px;
 }
-.shape-cassette .node-name {
-  color: #fffaf0;
-}
-.shape-cassette .node-status {
-  color: #cfc3b0;
-}
+.shape-cassette .node-name { color: #fffaf0; }
+.shape-cassette .node-status { color: #cfc3b0; }
 
-/* 4. Старый кинобилет с перфорацией (Билет в прошлое) */
 .shape-ticket {
   background: #ebd3a7;
   border: 1.5px dashed #8c6d3f;
   border-radius: 6px;
 }
 
-/* 5. Бланк радиоперехвата (Частота BTS & Cortis) */
 .shape-radio {
   background: #ebe7dc;
   border: 1px solid #8f897a;
@@ -511,21 +486,18 @@ body {
   border-radius: 1px;
 }
 
-/* 6. Крафтовый конверт с сургучной печатью (Финал) */
 .shape-envelope {
   background: #d9b98c;
   border: 1px solid #9c7a4c;
   border-radius: 3px;
 }
 
-/* ЭФФЕКТ ФОТОНЕГАТИВА ДЛЯ НЕРАСКРЫТЫХ УЛИК */
 .board-node.locked {
-  filter: invert(0.92) hue-rotate(185deg) contrast(1.1) opacity(0.72);
+  filter: invert(0.92) hue-rotate(185deg) contrast(1.1) opacity(0.75);
   cursor: not-allowed;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
 }
 
-/* Активная улика пульсирует красным ореолом */
 .board-node.available {
   box-shadow: 0 8px 22px rgba(201, 24, 43, 0.42), 0 0 0 2px var(--red-thread);
   z-index: 4;
@@ -535,7 +507,6 @@ body {
   opacity: 0.96;
 }
 
-/* Канцелярская кнопка (Pin) */
 .pin {
   width: 14px;
   height: 14px;
@@ -554,7 +525,6 @@ body {
   background: radial-gradient(circle at 35% 35%, #ff6373, var(--red-thread) 65%, #7a0915);
 }
 
-/* Полоска полупрозрачного скотча на части карточек */
 .scotch-tape {
   position: absolute;
   top: -7px;
@@ -576,9 +546,7 @@ body {
   letter-spacing: 0.5px;
 }
 
-.shape-cassette .node-step {
-  color: #ff6b7a;
-}
+.shape-cassette .node-step { color: #ff6b7a; }
 
 .node-name {
   font-family: 'Special Elite', 'IBM Plex Mono', monospace;
@@ -596,9 +564,7 @@ body {
   line-height: 1.1;
 }
 
-.shape-cassette .node-handnote {
-  color: #d4c7b4;
-}
+.shape-cassette .node-handnote { color: #d4c7b4; }
 
 .node-status {
   margin-top: 6px;
@@ -607,7 +573,7 @@ body {
   color: var(--ink-muted);
 }
 
-/* МОДАЛЬНОЕ ОКНО КАРТОЧКИ ДОСЬЕ (ТАКЖЕ В СТИЛЕ АРХИВНОГО ЛИСТА) */
+/* МОДАЛЬНОЕ ОКНО КАРТОЧКИ ДОСЬЕ */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -620,9 +586,7 @@ body {
   padding: 10px;
 }
 
-.modal-backdrop.hidden {
-  display: none;
-}
+.modal-backdrop.hidden { display: none; }
 
 .dossier-card {
   width: 100%;
@@ -671,7 +635,6 @@ body {
   color: #181411;
 }
 
-/* Полароид внутри дела */
 .polaroid-frame {
   background: #ffffff;
   padding: 9px 9px 8px;
@@ -703,9 +666,7 @@ body {
   display: block;
 }
 
-.polaroid-real-img.hidden {
-  display: none;
-}
+.polaroid-real-img.hidden { display: none; }
 
 .polaroid-caption {
   font-family: 'Caveat', cursive;
@@ -716,7 +677,6 @@ body {
   margin-top: 5px;
 }
 
-/* Кассетный диктофон Электроника-302 (контрастный ретро-корпус на бумаге) */
 .cassette-player {
   background: #262320;
   color: #f2eadc;
@@ -754,9 +714,7 @@ body {
   line-height: 1;
 }
 
-.reel.spinning {
-  animation: spinReel 1.5s linear infinite;
-}
+.reel.spinning { animation: spinReel 1.5s linear infinite; }
 
 @keyframes spinReel {
   100% { transform: rotate(360deg); }
@@ -803,11 +761,8 @@ body {
   text-align: center;
 }
 
-.audio-status-hint.hidden {
-  display: none;
-}
+.audio-status-hint.hidden { display: none; }
 
-/* Текст дела и варианты ответа */
 .dossier-desc {
   font-size: 12.5px;
   line-height: 1.52;
@@ -882,11 +837,8 @@ body {
   box-shadow: 0 4px 14px rgba(201, 24, 43, 0.4);
 }
 
-.primary-action-btn.hidden {
-  display: none;
-}
+.primary-action-btn.hidden { display: none; }
 
-/* Финальный вердикт */
 .final-banner {
   background: #fbf6ea;
   border: 2px solid var(--red-thread);
@@ -906,7 +858,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Анимация поезда */
 .train-overlay {
   position: fixed;
   inset: 0;
@@ -921,9 +872,7 @@ body {
   text-align: center;
 }
 
-.train-overlay.hidden {
-  display: none;
-}
+.train-overlay.hidden { display: none; }
 
 .red-strobe {
   position: absolute;

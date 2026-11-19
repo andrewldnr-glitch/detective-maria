@@ -3,14 +3,13 @@ if (tg) {
   tg.ready();
   tg.expand();
   try {
-    tg.setHeaderColor('#e6dcc6');
+    tg.setHeaderColor('#ebe2ce');
     tg.setBackgroundColor('#dfd5c0');
   } catch (e) {}
 }
 
-const STORAGE_KEY = 'detective_maria_state_v4';
+const STORAGE_KEY = 'detective_maria_state_v5';
 
-// Конфигурация 6 разноформатных улик на «живом столе»
 const STAGES = [
   {
     id: 0,
@@ -164,7 +163,6 @@ const progressBarEl = document.getElementById('tape-progress-bar');
 const audioHintEl = document.getElementById('audio-status-hint');
 const tapeFileLabel = document.getElementById('tape-file-label');
 
-// Автоподхват GIF / JPG / MP4 на загрузочном экране
 function initSplashAvatarMedia() {
   const imgEl = document.getElementById('splash-avatar-img');
   const videoEl = document.getElementById('splash-avatar-video');
@@ -211,7 +209,7 @@ function initSplashScreen() {
     line4.classList.remove('hidden');
     enterBtn.disabled = false;
     enterBtn.classList.add('ready');
-    enterBtn.textContent = '📂 ВСКРЫТЬ ДЕЛО (ВКЛ. ЗВУК)';
+    enterBtn.textContent = '📂 ВСКРЫТЬ ДЕЛО';
     haptic('light');
   }, 1450);
 
@@ -315,7 +313,6 @@ function formatTime(sec) {
   return `${mins}:${secs}`;
 }
 
-// Отрисовка живого стола: провисающие красные нити (кривые Безье) + разноформатные улики
 function renderBoard() {
   boardNodesEl.innerHTML = '';
   threadsSvgEl.innerHTML = '';
@@ -329,7 +326,6 @@ function renderBoard() {
     const x2 = next.x + 80;
     const y2 = next.y;
 
-    // Контрольная точка для естественного провисания нити на столе
     const cx = (x1 + x2) / 2;
     const cy = Math.max(y1, y2) + 22;
 
@@ -536,7 +532,7 @@ playBtn.addEventListener('click', () => {
 
 function stopVoiceAudio() {
   audioEl.pause();
-  playBtn.textContent = '▶ ПУСК ЗАПИСИ (ФОН ЗАТИХНЕТ)';
+  playBtn.textContent = '▶ ПУСК ЗАПИСИ';
   playBtn.classList.remove('playing');
   reelLeft.classList.remove('spinning');
   reelRight.classList.remove('spinning');
@@ -604,7 +600,6 @@ document.getElementById('reset-progress-btn').addEventListener('click', () => {
   }
 });
 
-// Старт приложения
 loadState();
 renderBoard();
 initSplashScreen();

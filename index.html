@@ -11,12 +11,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Эффект лампы, бумажной фактуры и виньетки -->
+  <!-- Тёплый свет лампы и фактура матовой архивной бумаги по всему экрану -->
   <div class="lamp-glow"></div>
   <div class="paper-grain"></div>
   <div class="vignette"></div>
 
-  <!-- ЗАГРУЗОЧНЫЙ ЭКРАН (Архивная папка + встроенная GIF Детектива Марии) -->
+  <!-- ЗАГРУЗОЧНЫЙ ЭКРАН -->
   <div id="splash-screen" class="splash-screen">
     <div class="splash-folder">
       <div class="folder-tab">АРХИВ МВД • 1988</div>
@@ -24,7 +24,7 @@
       <h1 class="splash-title">ДЕЛО № 08-11</h1>
       <p class="splash-subtitle">О ПОХИЩЕНИИ ГЛАВНОГО КОНВЕРТА</p>
 
-      <!-- Полароид-карточка с встроенной GIF-анимацией -->
+      <!-- Полароид с анимированной GIF Детектива Марии -->
       <div class="splash-avatar-frame" id="splash-avatar-frame">
         <div class="avatar-pin"></div>
         <img id="splash-avatar-img" class="splash-avatar-media" src="assets/detective.gif" alt="Детектив Мария" />
@@ -62,7 +62,7 @@
   <!-- Фоновая детективная музыка -->
   <audio id="bg-music" src="assets/bgm.mp3" loop preload="auto"></audio>
 
-  <!-- Верхняя панель: Бирка дела + Шифр сейфа на перфокарте -->
+  <!-- Верхняя панель -->
   <header class="case-header">
     <div class="case-title-row">
       <div class="title-left">
@@ -73,7 +73,7 @@
       <span class="stamp-secret">СЕКРЕТНО</span>
     </div>
     <div class="safe-code-box">
-      <div class="safe-label">КОДОВАЯ ФРАЗА СЕЙФА (ОТПЕЧАТОК ЛИТЕР):</div>
+      <div class="safe-label">КОДОВАЯ ФРАЗА СЕЙФА:</div>
       <div class="code-slots" id="code-slots">
         <div class="code-slot" data-word="ВИСКА">????</div>
         <div class="code-slot" data-word="БАРСА">????</div>
@@ -86,23 +86,18 @@
   <!-- ЖИВОЙ СТОЛ НА МАТОВОЙ АРХИВНОЙ БУМАГЕ -->
   <main class="board-wrapper">
     <div class="board-container" id="board-container">
-      <!-- Фоновые пометки карандашом на бумаге -->
       <div class="desk-pencil-note note-top">Арх. лист № 1988-М • Не сгибать</div>
       <div class="desk-pencil-note note-mid">Сверить показания Кучерявого!</div>
       <div class="desk-pencil-note note-bot">Улика № 5 → проверить частоту</div>
 
-      <!-- Провисающие красные нити (кривые Безье) -->
       <svg class="threads-svg" id="threads-svg" viewBox="0 0 360 760" preserveAspectRatio="none"></svg>
-
-      <!-- Разноформатные карточки-улики на столе -->
       <div class="nodes-layer" id="nodes-layer"></div>
     </div>
   </main>
 
-  <!-- Модальное окно активного этапа (Допрос / Улика) -->
+  <!-- Модальное окно активного этапа -->
   <div id="stage-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
     <div class="dossier-card">
-      <div class="dossier-clip"></div>
       <button id="close-modal" class="close-btn" aria-label="Закрыть">✕</button>
       
       <div class="dossier-header">
@@ -133,7 +128,7 @@
           <div class="reel right-reel" id="reel-right">⚙</div>
         </div>
         <div class="cassette-controls">
-          <button id="play-btn" class="tape-btn">▶ ПУСК ЗАПИСИ (ФОН ЗАТИХНЕТ)</button>
+          <button id="play-btn" class="tape-btn">▶ ПУСК ЗАПИСИ</button>
         </div>
         <div id="audio-status-hint" class="audio-status-hint hidden"></div>
         <audio id="stage-audio" preload="metadata"></audio>
