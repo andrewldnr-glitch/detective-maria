@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ДЕЛО № 08-11: Похищение конверта</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="vhs-grain"></div>
+  <div class="vignette"></div>
+
+  <!-- Загрузочный экран (Секретная папка + GIF-досье Детектива Марии + разблокировка фонового звука) -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-folder">
+      <div class="folder-tab">АРХИВ МВД • 1988</div>
+      <div class="folder-stamp">СОВЕРШЕННО СЕКРЕТНО</div>
+      <h1 class="splash-title">ДЕЛО № 08-11</h1>
+      <p class="splash-subtitle">О ПОХИЩЕНИИ ГЛАВНОГО КОНВЕРТА</p>
+
+      <!-- Анимированное досье Детектива Марии (подхватывает detective.gif, detective.mp4 или detective.jpg) -->
+      <div class="splash-avatar-frame" id="splash-avatar-frame">
+        <div class="avatar-pin"></div>
+        <img id="splash-avatar-img" class="splash-avatar-media" src="assets/detective.gif" alt="Детектив Мария" />
+        <video id="splash-avatar-video" class="splash-avatar-media hidden" src="assets/detective.mp4" autoplay loop muted playsinline></video>
+        <div id="splash-avatar-fallback" class="splash-avatar-fallback hidden">🕵️‍♀️</div>
+        <div class="splash-avatar-badge">ДЕТЕКТИВ МАРИЯ</div>
+      </div>
+
+      <div class="splash-terminal" id="splash-terminal">
+        <div class="term-line" id="term-line-1">> Инициализация фотолаборатории...</div>
+        <div class="term-line hidden" id="term-line-2">> Проявка негативов: 6 улик найдено...</div>
+        <div class="term-line hidden" id="term-line-3">> Настройка частоты «Электроника-302»...</div>
+        <div class="term-line hidden" id="term-line-4">> Доступ разрешён: ДЕТЕКТИВ МАРИЯ</div>
+      </div>
+
+      <div class="splash-progress-wrap">
+        <div class="splash-progress-bar" id="splash-progress-bar"></div>
+      </div>
+
+      <button id="enter-case-btn" class="enter-case-btn" disabled>
+        ⏳ ПРОЯВКА ПЛЁНКИ...
+      </button>
+    </div>
+  </div>
+
+  <!-- Скример: Внезапный поезд -->
+  <div id="train-overlay" class="train-overlay hidden" aria-hidden="true">
+    <div class="red-strobe"></div>
+    <div id="train-entity" class="train-entity">
+      <div class="train-headlight"></div>
+      <div class="train-body">🚂 ЭКСПРЕСС № 666</div>
+    </div>
+    <div class="train-caption">⚠️ ОУ, ЧЁРТ ВОЗЬМИ, ОТКУДА ЗДЕСЬ ЭТОТ ПОЕЗД?! ⚠️</div>
+  </div>
+
+  <!-- Фоновая детективная музыка -->
+  <audio id="bg-music" src="assets/bgm.mp3" loop preload="auto"></audio>
+
+  <!-- Верхняя панель: Статус дела, Кнопка фоновой музыки и Шифр сейфа -->
+  <header class="case-header">
+    <div class="case-title-row">
+      <div class="title-left">
+        <span class="case-number">ДЕЛО № 08-11</span>
+        <button id="bgm-toggle-btn" class="icon-ctrl-btn" title="Фоновая музыка">🔊 ФОН</button>
+        <button id="reset-progress-btn" class="icon-ctrl-btn" title="Сбросить прогресс">↺ СБРОС</button>
+      </div>
+      <span class="stamp-secret">СЕКРЕТНО</span>
+    </div>
+    <div class="safe-code-box">
+      <div class="safe-label">ШИФР СЕЙФА (КОДОВАЯ ФРАЗА):</div>
+      <div class="code-slots" id="code-slots">
+        <div class="code-slot" data-word="ВИСКА">????</div>
+        <div class="code-slot" data-word="БАРСА">????</div>
+        <div class="code-slot" data-word="И ВИСКА">????</div>
+        <div class="code-slot" data-word="BTS">????</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Доска расследования с красной нитью -->
+  <main class="board-wrapper">
+    <div class="board-container" id="board-container">
+      <svg class="threads-svg" id="threads-svg" viewBox="0 0 360 720" preserveAspectRatio="none">
+        <!-- Нити рисуются динамически через JS -->
+      </svg>
+
+      <div class="nodes-layer" id="nodes-layer">
+        <!-- Карточки этапов генерируются через JS -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Модальное окно активного этапа (Допрос / Улика) -->
+  <div id="stage-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="dossier-card">
+      <button id="close-modal" class="close-btn" aria-label="Закрыть">✕</button>
+      
+      <div class="dossier-header">
+        <span id="modal-tag" class="dossier-tag">УЛИКА №1</span>
+        <h2 id="modal-title" class="dossier-title">Название этапа</h2>
+      </div>
+
+      <!-- Цветной полароид (поддерживает и фото из assets, и ретро-иллюстрацию) -->
+      <div class="polaroid-frame">
+        <div id="polaroid-art" class="polaroid-image">
+          <img id="polaroid-img" class="polaroid-real-img hidden" alt="Улика" />
+          <span id="polaroid-emoji" class="polaroid-emoji"></span>
+        </div>
+        <div id="polaroid-caption" class="polaroid-caption">Пометка на полях</div>
+      </div>
+
+      <!-- Кассетный диктофон Электроника-302 -->
+      <div class="cassette-player">
+        <div class="cassette-top">
+          <span class="cassette-brand">ЭЛЕКТРОНИКА-302 • <span id="tape-file-label">stage1.mp3</span></span>
+          <span id="audio-timer" class="audio-timer">00:00 / 00:00</span>
+        </div>
+        <div class="cassette-window">
+          <div class="reel left-reel" id="reel-left">⚙</div>
+          <div class="tape-middle">
+            <div class="tape-progress-bar" id="tape-progress-bar"></div>
+          </div>
+          <div class="reel right-reel" id="reel-right">⚙</div>
+        </div>
+        <div class="cassette-controls">
+          <button id="play-btn" class="tape-btn">▶ ПУСК ЗАПИСИ (ФОН ЗАТИХНЕТ)</button>
+        </div>
+        <div id="audio-status-hint" class="audio-status-hint hidden"></div>
+        <audio id="stage-audio" preload="metadata"></audio>
+      </div>
+
+      <!-- Описание и вопрос -->
+      <div class="dossier-body" id="dossier-body">
+        <p id="modal-desc" class="dossier-desc"></p>
+        <div id="quiz-box" class="quiz-box">
+          <p id="modal-question" class="quiz-question"></p>
+          <div id="options-list" class="options-list"></div>
+          <p id="feedback-msg" class="feedback-msg"></p>
+        </div>
+        <div id="final-container"></div>
+        <button id="action-btn" class="primary-action-btn hidden">ПРОДОЛЖИТЬ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
