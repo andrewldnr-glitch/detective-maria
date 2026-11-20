@@ -3,12 +3,12 @@ if (tg) {
   tg.ready();
   tg.expand();
   try {
-    tg.setHeaderColor('#ebe2ce');
-    tg.setBackgroundColor('#dfd5c0');
+    tg.setHeaderColor('#1c1a18');
+    tg.setBackgroundColor('#1c1a18');
   } catch (e) {}
 }
 
-const STORAGE_KEY = 'detective_maria_state_v6';
+const STORAGE_KEY = 'detective_maria_state_v10';
 
 const STAGES = [
   {
@@ -22,29 +22,27 @@ const STAGES = [
     x: 14, y: 22,
     audio: 'assets/stage1.mp3',
     photo: 'assets/photo1.jpg',
-    emoji: '🕵️‍♀️📁',
-    bgGradient: 'linear-gradient(135deg, #2c3e50, #8e44ad)',
     caption: 'Улика №0: Пустой сейф и следы лап',
-    desc: 'Детектив Мария, в твой день рождения из тайника исчез главный конверт. Понятые (кот и собака) отказываются давать показания без вкусняшек. Злодей оставил аудиозапись на кассете. Нажми «ПУСК ЗАПИСИ» и начинай расследование.',
+    desc: 'Детектив Мария, в твой день рождения из тайника исчез главный конверт. Понятые (кот и собака) отказываются давать показания без вкусняшек, а дело уже закручивается.',
+    extraClue: 'На столе оставлена пометка: пройди все этапы допроса, собери кодовую фразу из четырёх частей и доберись до конверта.',
     isIntro: true,
     actionText: 'ПРИНЯТЬ ДЕЛО',
     nextMinigame: 'stamp'
   },
   {
     id: 1,
-    tag: 'УЛИКА №1 • ДОПРОС СВИДЕТЕЛЯ',
+    tag: 'УЛИКА №1 • ДОПРОС НА 1 ЭТАЖЕ',
     boardTitle: 'Стендап с душком',
-    handNote: 'Фото из зала (сомнительно)',
+    handNote: 'Кучерявый • админ 1 этажа',
     shapeClass: 'shape-polaroid',
     hasTape: false,
     rotate: 2.5,
     x: 186, y: 122,
     audio: 'assets/stage2.mp3',
     photo: 'assets/photo2.jpg',
-    emoji: '🎤💩',
-    bgGradient: 'linear-gradient(135deg, #b71540, #e58e26)',
-    caption: 'Показания Кучерявого (не подтверждены)',
-    desc: 'Кучерявый уверяет, что вечер перед кражей прошёл тихо — вы просто смотрели стендап. Но детектор лжи дымится. Включи запись и выясни, что на самом деле произошло.',
+    caption: 'Кучерявый на даче не был — выбиваем показания',
+    desc: 'Кучерявый сидит администратором на первом этаже — на даче он не был и сцену не видел, но крутится так, будто знает лишнее. Выбиваем из него показания по вечернему стендапу и прижимаем фактами.',
+    extraClue: 'Свидетель пытается отмазаться, но факты с вечернего стендапа указывают на критический сбой прямо во время шуток.',
     question: 'Какая катастрофа чуть не сорвала просмотр того стендапа?',
     options: [
       { text: 'Сели батарейки в пульте от телевизора', correct: false, hint: 'Кучерявый бы обрадовался, но нет.' },
@@ -58,17 +56,16 @@ const STAGES = [
     id: 2,
     tag: 'УЛИКА №2 • АРХИВ VHS',
     boardTitle: 'Дело «Бригада»',
-    handNote: 'Кассета зажёвана на 18+',
+    handNote: 'Кассета обрывается на 18+',
     shapeClass: 'shape-cassette',
     hasTape: false,
     rotate: -1.8,
     x: 16, y: 252,
     audio: 'assets/stage3.mp3',
     photo: 'assets/photo3.jpg',
-    emoji: '📼🔞',
-    bgGradient: 'linear-gradient(135deg, #1e272e, #ff3f34)',
-    caption: 'Плёнка зажёвана на середине серии',
-    desc: 'Оперативники изъяли видеокассету с «Бригадой». Вы пытались посмотреть этот сериал уже не раз, но до финальных титров дело так и не дошло.',
+    caption: 'Плёнка срывается задолго до конца серии',
+    desc: 'Оперативники изъяли кассету с «Бригадой». Досмотреть серию спокойно так и не выходит — каждый раз развитие событий резко сворачивает в сторону.',
+    extraClue: 'По счётчику кассеты видно: сюжет регулярно обрывается, когда атмосфера накаляется до рейтинга 18+.',
     question: 'По какой уважительной причине Саша Белый вечно остаётся без зрителей?',
     options: [
       { text: 'Слишком закрученный криминальный сюжет', correct: false, hint: 'Не в сюжете дело, детектив.' },
@@ -82,17 +79,16 @@ const STAGES = [
     id: 3,
     tag: 'УЛИКА №3 • АРХИВ 8 ЛЕТ',
     boardTitle: 'Билет в прошлое',
-    handNote: 'Контроль • 8 лет назад',
+    handNote: 'Киносеанс • 8 лет назад',
     shapeClass: 'shape-ticket',
     hasTape: true,
     rotate: 2.1,
     x: 186, y: 376,
     audio: 'assets/stage4.mp3',
     photo: 'assets/photo4.jpg',
-    emoji: '🎟️🕰️',
-    bgGradient: 'linear-gradient(135deg, #0a3d62, #38ada9)',
-    caption: 'Кинотеатр • 8 лет назад',
-    desc: 'На дне папки обнаружен выцветший билет в кино восьмилетней давности. Точка отсчёта, после которой судьба разбросала вас на долгие 8 лет.',
+    caption: 'Выцветший билет восьмилетней давности',
+    desc: 'В архивной папке найден старый кинобилет восьмилетней давности. Восемь лет назад вы сидели в зале, а затем время развело вас до нынешней встречи.',
+    extraClue: 'Название того фильма короткое и точное — ровно как восемь пролетевших лет.',
     question: 'На какой фильм вы ходили на том самом свидании 8 лет назад?',
     options: [
       { text: '«Короче»', correct: true },
@@ -105,18 +101,16 @@ const STAGES = [
     id: 4,
     tag: 'УЛИКА №4 • РАДИОПЕРЕХВАТ',
     boardTitle: 'Частота BTS & Cortis',
-    handNote: 'Внимание: шум на путях!',
+    handNote: 'Чистая волна без помех',
     shapeClass: 'shape-radio',
     hasTape: false,
     rotate: -2.4,
     x: 16, y: 502,
     audio: 'assets/stage5.mp3',
     photo: 'assets/photo5.jpg',
-    emoji: '📻💜',
-    bgGradient: 'linear-gradient(135deg, #4a148c, #e91e63)',
-    caption: 'Перехвачен зашифрованный плейлист',
-    desc: 'Финальный узел! Злодей зашифровал последнее слово шифра на частотах твоих любимых групп — BTS и Cortis. Внимание: при включении записи возможны помехи на путях!',
-    hasTrainEvent: true,
+    caption: 'Эфир BTS & Cortis — финальное слово',
+    desc: 'На волне звучат BTS и Cortis — без помех в эфире, только чистый сигнал с подсказкой для завершения фразы «Виска Барса и виска...».',
+    extraClue: 'Сверь услышанное с вариантами и открой четвёртое слово для замка тайника.',
     question: 'Какое слово на самом деле завершает главный девиз «Виска Барса и виска...»?',
     options: [
       { text: 'Каталония', correct: false, hint: 'Слишком предсказуемо! Посмотри на улики вокруг.' },
@@ -137,55 +131,71 @@ const STAGES = [
     x: 186, y: 622,
     audio: 'assets/stage6.mp3',
     photo: 'assets/photo6.jpg',
-    emoji: '✉️❤️',
-    bgGradient: 'linear-gradient(135deg, #b31217, #e52d27)',
     caption: 'С Днём Рождения, Детектив Мария!',
-    desc: 'Сейф взломан, все нити сошлись! Злодей полностью разоблачён и готов сдать главный вещдок. Послушай финальное обращение и назови собранный пароль вживую, чтобы забрать конверт.',
+    desc: 'Дело № 08-11 закрыто! Все улики собраны, показания выбиты, поезд с Пэрри промчался мимо, а главный конверт ждёт. После полного прохождения в шапке появится доступ к неудачным дублям (n1–n6).',
+    extraClue: 'Произнеси кодовую фразу вслух и забирай конверт.',
     isFinal: true
   }
 ];
 
+const BLOOPER_TRACKS = [
+  { file: 'assets/n1.mp3', label: 'n1.mp3 — Неудачный дубль №1' },
+  { file: 'assets/n2.mp3', label: 'n2.mp3 — Неудачный дубль №2' },
+  { file: 'assets/n3.mp3', label: 'n3.mp3 — Неудачный дубль №3' },
+  { file: 'assets/n4.mp3', label: 'n4.mp3 — Неудачный дубль №4' },
+  { file: 'assets/n5.mp3', label: 'n5.mp3 — Неудачный дубль №5' },
+  { file: 'assets/n6.mp3', label: 'n6.mp3 — Неудачный дубль №6' }
+];
+
 const MINIGAME_CONFIGS = {
   stamp: {
-    badge: 'СПЕЦПРОВЕРКА №1 • КАНЦЕЛЯРИЯ',
+    badge: 'СПЕЦПРОВЕРКА №1 • 3 РАУНДА',
     title: 'Точный удар штампом по метке',
-    rules: 'Чтобы открыть доступ к следующей улике, нужно заверить архивный бланк печатью. Красный штамп движется над листом слева направо.',
-    hint: 'КАК ИГРАТЬ: Нажми кнопку «ПОСТАВИТЬ ШТАМП» ровно в тот момент, когда печать окажется внутри зелёной пунктирной рамки. Нужно 2 точных оттиска!'
+    rules: 'Пройди 3 раунда печати. Скорость и размер зелёной зоны подобраны так, чтобы можно было спокойно попасть в цель.',
+    hint: 'КАК ИГРАТЬ: Нажимай «ПОСТАВИТЬ ШТАМП», когда печать в зелёной зоне. По 2 точных оттиска в каждом из 3 раундов.'
   },
   circuit: {
-    badge: 'СПЕЦПРОВЕРКА №2 • АППАРАТУРА',
+    badge: 'СПЕЦПРОВЕРКА №2 • 2 СХЕМЫ',
     title: 'Сборка схемы контактов',
-    rules: 'Контактная плата архивного магнитофона обесточена — дорожки на бланке повёрнуты вразнобой, и сигнал не проходит от входа к выходу.',
-    hint: 'КАК ИГРАТЬ: Нажимай на плитки с дорожками, чтобы поворачивать их на 90°. Соедини сплошную линию от левого верхнего угла («ВХОД») до правого нижнего («ВЫХОД»).'
+    rules: 'Собери непрерывную цепь на двух платах подряд (схема №1 и схема №2). Ориентируйся на подсветку соединяющихся дорожек.',
+    hint: 'КАК ИГРАТЬ: Нажимай на плитки, чтобы поворачивать их на 90°, пока не загорится весь рабочий маршрут.'
   },
   pressure: {
-    badge: 'СПЕЦПРОВЕРКА №3 • МАНОМЕТР',
+    badge: 'СПЕЦПРОВЕРКА №3 • 2 ЭТАПА ДАВЛЕНИЯ',
     title: 'Накачка давления в системе',
-    rules: 'Чтобы открыть архивный замок, нужно накачать давление в ретро-манометре и удержать стрелку в рабочей зоне.',
-    hint: 'КАК ИГРАТЬ: Зажимай и отпускай кнопку «КАЧАТЬ ДАВЛЕНИЕ», чтобы удерживать жёлтую стрелку внутри зелёной зоны. Пока стрелка в зелёной зоне, шкала заполняется до 100%. Не уводи в красную зону перегруза!'
+    rules: 'Удерживай стрелку в зелёной зоне до 100% в двух режимах нагрузки, не доводя до перегруза в красной зоне.',
+    hint: 'КАК ИГРАТЬ: Зажимай и отпускай кнопку «КАЧАТЬ ДАВЛЕНИЕ», набирая 100% на каждом этапе.'
   },
   safelock: {
     badge: 'ФИНАЛЬНЫЙ ВЗЛОМ • СЕЙФ',
     title: 'Кодовый замок главного тайника',
-    rules: 'Все 4 слова кодовой фразы собраны в верхней панели дела. Осталось вручную выставить их на барабанах механического замка сейфа.',
-    hint: 'КАК ИГРАТЬ: Нажимай стрелки ▲ / ▼ на каждом из 4 барабанов, чтобы собрать фразу «ВИСКА — БАРСА — И ВИСКА — BTS», затем нажми «ОТКРЫТЬ СЕЙФ».'
+    rules: 'Выставь на 4 барабанах собранную кодовую фразу, чтобы открыть доступ к финальному этапу.',
+    hint: 'КАК ИГРАТЬ: Переключай барабаны стрелками ▲ / ▼ и нажми «ОТКРЫТЬ СЕЙФ».'
   }
 };
 
 let currentUnlockedStage = 0;
 let unlockedWords = [false, false, false, false];
+let questCompleted = false;
+let trainTriggeredBetween3And4 = false;
 let activeStage = null;
 let isAdvancing = false;
 let activeAnimFrame = null;
 
 let bgmEnabled = true;
 const BGM_DEFAULT_VOL = 0.35;
+const BGM_DUCKED_VOL = 0.06;
+let bgmFadeTimer = null;
 
 const boardNodesEl = document.getElementById('nodes-layer');
 const threadsSvgEl = document.getElementById('threads-svg');
 const modalEl = document.getElementById('stage-modal');
 const mgModalEl = document.getElementById('minigame-modal');
+const bloopersModalEl = document.getElementById('bloopers-modal');
+const bloopersMenuBtn = document.getElementById('bloopers-menu-btn');
 const audioEl = document.getElementById('stage-audio');
+const trainAudioEl = new Audio('assets/poezd.mp3');
+trainAudioEl.preload = 'auto';
 const bgMusicEl = document.getElementById('bg-music');
 const bgmToggleBtn = document.getElementById('bgm-toggle-btn');
 const playBtn = document.getElementById('play-btn');
@@ -195,6 +205,57 @@ const timerEl = document.getElementById('audio-timer');
 const progressBarEl = document.getElementById('tape-progress-bar');
 const audioHintEl = document.getElementById('audio-status-hint');
 const tapeFileLabel = document.getElementById('tape-file-label');
+
+function syncBloopersButtonUI() {
+  if (questCompleted || currentUnlockedStage >= STAGES.length - 1) {
+    questCompleted = true;
+    saveState();
+    bloopersMenuBtn.classList.remove('hidden');
+  } else {
+    bloopersMenuBtn.classList.add('hidden');
+  }
+}
+
+function fadeBgMusicTo(targetVol, durationMs = 450) {
+  if (!bgmEnabled) {
+    bgMusicEl.pause();
+    return;
+  }
+  if (bgmFadeTimer) {
+    clearInterval(bgmFadeTimer);
+    bgmFadeTimer = null;
+  }
+  if (bgMusicEl.paused && targetVol > 0) {
+    bgMusicEl.play().catch(() => {});
+  }
+  const startVol = bgMusicEl.volume;
+  const steps = 15;
+  const stepTime = Math.max(20, Math.floor(durationMs / steps));
+  const delta = (targetVol - startVol) / steps;
+  let currentStep = 0;
+
+  bgmFadeTimer = setInterval(() => {
+    currentStep++;
+    bgMusicEl.volume = Math.min(1, Math.max(0, startVol + delta * currentStep));
+    if (currentStep >= steps) {
+      clearInterval(bgmFadeTimer);
+      bgmFadeTimer = null;
+      bgMusicEl.volume = targetVol;
+    }
+  }, stepTime);
+}
+
+function duckBackgroundMusicForVoice() {
+  if (!bgmEnabled) return;
+  fadeBgMusicTo(BGM_DUCKED_VOL, 350);
+}
+
+function restoreBackgroundMusicAfterVoice() {
+  if (!bgmEnabled) return;
+  if (audioEl.paused && trainAudioEl.paused) {
+    fadeBgMusicTo(BGM_DEFAULT_VOL, 500);
+  }
+}
 
 function initSplashAvatarMedia() {
   const imgEl = document.getElementById('splash-avatar-img');
@@ -219,7 +280,6 @@ function initSplashAvatarMedia() {
 
 function initSplashScreen() {
   initSplashAvatarMedia();
-
   const splashEl = document.getElementById('splash-screen');
   const barEl = document.getElementById('splash-progress-bar');
   const enterBtn = document.getElementById('enter-case-btn');
@@ -234,45 +294,34 @@ function initSplashScreen() {
     line4.classList.remove('hidden');
     enterBtn.disabled = false;
     enterBtn.classList.add('ready');
-    enterBtn.textContent = '📂 ВСКРЫТЬ ДЕЛО';
+    enterBtn.textContent = 'ВСКРЫТЬ ДЕЛО';
     haptic('light');
   }, 1450);
 
   enterBtn.addEventListener('click', () => {
     haptic('medium');
     splashEl.classList.add('fade-out');
-    startBackgroundMusic();
-    setTimeout(() => { splashEl.style.display = 'none'; }, 600);
+    if (bgmEnabled) {
+      bgMusicEl.volume = BGM_DEFAULT_VOL;
+      bgMusicEl.play().catch(() => {});
+    }
+    setTimeout(() => { splashEl.style.display = 'none'; }, 500);
   });
-}
-
-function startBackgroundMusic() {
-  if (!bgmEnabled) return;
-  bgMusicEl.volume = BGM_DEFAULT_VOL;
-  bgMusicEl.play().catch(() => {});
-}
-
-function pauseBackgroundMusicForVoice() {
-  if (!bgMusicEl.paused) bgMusicEl.pause();
-}
-
-function resumeBackgroundMusicAfterVoice() {
-  if (bgmEnabled && audioEl.paused) {
-    bgMusicEl.volume = BGM_DEFAULT_VOL;
-    bgMusicEl.play().catch(() => {});
-  }
 }
 
 bgmToggleBtn.addEventListener('click', () => {
   bgmEnabled = !bgmEnabled;
   haptic('light');
   if (bgmEnabled) {
-    bgmToggleBtn.textContent = '🔊 ФОН';
+    bgmToggleBtn.textContent = 'ФОН: ВКЛ';
     bgmToggleBtn.classList.remove('muted');
-    if (audioEl.paused) startBackgroundMusic();
+    const target = audioEl.paused && trainAudioEl.paused ? BGM_DEFAULT_VOL : BGM_DUCKED_VOL;
+    bgMusicEl.volume = target;
+    bgMusicEl.play().catch(() => {});
   } else {
-    bgmToggleBtn.textContent = '🔇 ФОН';
+    bgmToggleBtn.textContent = 'ФОН: ВЫКЛ';
     bgmToggleBtn.classList.add('muted');
+    if (bgmFadeTimer) clearInterval(bgmFadeTimer);
     bgMusicEl.pause();
   }
 });
@@ -288,12 +337,19 @@ function loadState() {
     if (Array.isArray(parsed.unlockedWords) && parsed.unlockedWords.length === 4) {
       unlockedWords = parsed.unlockedWords;
     }
+    questCompleted = Boolean(parsed.questCompleted);
+    trainTriggeredBetween3And4 = Boolean(parsed.trainTriggeredBetween3And4);
   } catch (e) {}
 }
 
 function saveState() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ currentUnlockedStage, unlockedWords }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      currentUnlockedStage,
+      unlockedWords,
+      questCompleted,
+      trainTriggeredBetween3And4
+    }));
   } catch (e) {}
 }
 
@@ -333,6 +389,7 @@ function renderBoard() {
   boardNodesEl.innerHTML = '';
   threadsSvgEl.innerHTML = '';
   syncCodeSlotsUI();
+  syncBloopersButtonUI();
 
   for (let i = 0; i < STAGES.length - 1; i++) {
     const curr = STAGES[i];
@@ -363,10 +420,10 @@ function renderBoard() {
     else node.classList.add('locked');
 
     const statusText = stage.id < currentUnlockedStage
-      ? '✓ ПРОЯВЛЕНО'
+      ? 'ПРОЯВЛЕНО'
       : stage.id === currentUnlockedStage
-        ? '● АКТИВНАЯ УЛИКА'
-        : '🔒 НЕГАТИВ';
+        ? 'АКТИВНАЯ УЛИКА'
+        : 'НЕГАТИВ';
 
     const tapeHtml = stage.hasTape ? '<div class="scotch-tape"></div>' : '';
 
@@ -402,26 +459,17 @@ function openStageModal(stage) {
   document.getElementById('modal-desc').textContent = stage.desc;
   document.getElementById('polaroid-caption').textContent = stage.caption;
 
-  const polaroidArt = document.getElementById('polaroid-art');
-  const polaroidImg = document.getElementById('polaroid-img');
-  const polaroidEmoji = document.getElementById('polaroid-emoji');
-
-  polaroidArt.style.background = stage.bgGradient;
-  polaroidEmoji.textContent = stage.emoji;
-  polaroidEmoji.style.display = 'inline';
-  polaroidImg.classList.add('hidden');
-
-  if (stage.photo) {
-    polaroidImg.onload = () => {
-      polaroidImg.classList.remove('hidden');
-      polaroidEmoji.style.display = 'none';
-    };
-    polaroidImg.onerror = () => {
-      polaroidImg.classList.add('hidden');
-      polaroidEmoji.style.display = 'inline';
-    };
-    polaroidImg.src = stage.photo;
+  const extraClueBox = document.getElementById('extra-clue-box');
+  const extraClueText = document.getElementById('extra-clue-text');
+  if (stage.extraClue) {
+    extraClueText.textContent = stage.extraClue;
+    extraClueBox.classList.remove('hidden');
+  } else {
+    extraClueBox.classList.add('hidden');
   }
+
+  const polaroidImg = document.getElementById('polaroid-img');
+  polaroidImg.src = stage.photo;
 
   const fileName = stage.audio.split('/').pop();
   tapeFileLabel.textContent = fileName;
@@ -447,11 +495,14 @@ function openStageModal(stage) {
   } else if (stage.isFinal) {
     quizBox.style.display = 'none';
     actionBtn.classList.add('hidden');
+    questCompleted = true;
+    saveState();
+    syncBloopersButtonUI();
     finalContainer.innerHTML = `
       <div class="final-banner">
-        <div style="font-size: 11px; color: #5c5347; font-weight: 700;">КОДОВАЯ ФРАЗА ДЛЯ ПОЛУЧЕНИЯ КОНВЕРТА:</div>
+        <div style="font-size: 11px; color: #b5aa96; font-weight: 700;">КОДОВАЯ ФРАЗА ДЛЯ ПОЛУЧЕНИЯ КОНВЕРТА:</div>
         <div class="final-phrase">«ВИСКА БАРСА И ВИСКА BTS»</div>
-        <div style="font-size: 12px; color: #2b2520;">Подойди к главному подозреваемому и произнеси этот пароль вслух!</div>
+        <div style="font-size: 12px; color: #efe7d6;">Подойди к главному подозреваемому и произнеси этот пароль вслух. В шапке открыт доступ к неудачным дублям (n1–n6).</div>
       </div>
     `;
   } else {
@@ -473,16 +524,16 @@ function openStageModal(stage) {
           isAdvancing = true;
           haptic('success');
           btn.classList.add('correct');
-          feedbackMsg.style.color = '#1e7e34';
-          feedbackMsg.textContent = '✓ Улика подтверждена! Слово шифра открыто.';
+          feedbackMsg.style.color = '#7bc48b';
+          feedbackMsg.textContent = 'Улика подтверждена. Слово шифра открыто.';
           unlockCodeWord(stage.unlockWordIndex);
-          setTimeout(() => handleStagePassed(), 900);
+          setTimeout(() => handleStagePassed(), 850);
         } else {
           haptic('error');
           btn.classList.add('wrong');
-          feedbackMsg.style.color = '#c9182b';
-          feedbackMsg.textContent = opt.hint || 'Неверно, попробуй ещё раз!';
-          setTimeout(() => btn.classList.remove('wrong'), 450);
+          feedbackMsg.style.color = '#e06a76';
+          feedbackMsg.textContent = opt.hint || 'Неверно, попробуй ещё раз.';
+          setTimeout(() => btn.classList.remove('wrong'), 400);
         }
       };
       optionsList.appendChild(btn);
@@ -500,7 +551,6 @@ function unlockCodeWord(index) {
   }
 }
 
-// После прохождения этапа проверяем, нужно ли запустить мини-игру перед следующим
 function handleStagePassed() {
   const finishedStage = activeStage;
   const isNewProgress = finishedStage && finishedStage.id === currentUnlockedStage;
@@ -508,27 +558,63 @@ function handleStagePassed() {
   stopVoiceAudio();
   modalEl.classList.add('hidden');
 
-  if (isNewProgress && finishedStage.nextMinigame) {
-    openMinigameIntro(finishedStage.nextMinigame, () => {
+  const advanceToNext = () => {
+    if (isNewProgress && finishedStage.nextMinigame) {
+      openMinigameIntro(finishedStage.nextMinigame, () => {
+        unlockNextStageAndRender(finishedStage.id);
+      });
+    } else if (isNewProgress) {
       unlockNextStageAndRender(finishedStage.id);
-    });
-  } else if (isNewProgress) {
-    unlockNextStageAndRender(finishedStage.id);
+    }
+  };
+
+  // Между 3-м этапом (id === 3) и 4-м этапом (id === 4) срабатывает случайный эпизод с поездом и Пэрри Утконосом
+  if (isNewProgress && finishedStage.id === 3 && !trainTriggeredBetween3And4) {
+    const randomDelayMs = 400 + Math.floor(Math.random() * 1400);
+    setTimeout(() => {
+      triggerTrainBetween3And4(advanceToNext);
+    }, randomDelayMs);
+  } else {
+    advanceToNext();
   }
+}
+
+function triggerTrainBetween3And4(onDoneCallback) {
+  trainTriggeredBetween3And4 = true;
+  saveState();
+  haptic('heavy');
+
+  const overlay = document.getElementById('train-overlay');
+  const continueBtn = document.getElementById('continue-after-train-btn');
+  overlay.classList.remove('hidden');
+
+  duckBackgroundMusicForVoice();
+  trainAudioEl.currentTime = 0;
+  trainAudioEl.play().catch(() => {});
+
+  continueBtn.onclick = () => {
+    trainAudioEl.pause();
+    overlay.classList.add('hidden');
+    restoreBackgroundMusicAfterVoice();
+    if (typeof onDoneCallback === 'function') onDoneCallback();
+  };
 }
 
 function unlockNextStageAndRender(justFinishedId) {
   currentUnlockedStage = Math.min(STAGES.length - 1, currentUnlockedStage + 1);
+  if (currentUnlockedStage >= STAGES.length - 1) {
+    questCompleted = true;
+  }
   saveState();
   renderBoard();
 
   if (justFinishedId === 4 && currentUnlockedStage === 5) {
-    setTimeout(() => openStageModal(STAGES[5]), 400);
+    setTimeout(() => openStageModal(STAGES[5]), 350);
   }
 }
 
 /* =========================================================
-   СИСТЕМА МИНИ-ИГР (СНАЧАЛА ТОЧНЫЕ ПРАВИЛА -> ПОТОМ ИГРА)
+   МИНИ-ИГРЫ
    ========================================================= */
 function stopMinigameLoop() {
   if (activeAnimFrame) {
@@ -567,12 +653,12 @@ function openMinigameIntro(gameType, onWinCallback) {
     const finishGame = () => {
       stopMinigameLoop();
       haptic('success');
-      feedbackEl.style.color = '#1e7e34';
-      feedbackEl.textContent = '✓ ИСПЫТАНИЕ ПРОЙДЕНО! Следующая улика открыта.';
+      feedbackEl.style.color = '#7bc48b';
+      feedbackEl.textContent = 'ИСПЫТАНИЕ ПРОЙДЕНО. Следующая улика открыта.';
       setTimeout(() => {
         mgModalEl.classList.add('hidden');
         onWinCallback();
-      }, 1000);
+      }, 900);
     };
 
     if (gameType === 'stamp') startStampGame(finishGame);
@@ -584,92 +670,123 @@ function openMinigameIntro(gameType, onWinCallback) {
   mgModalEl.classList.remove('hidden');
 }
 
-// 1. МИНИ-ИГРА: ТОЧНЫЙ УДАР ШТАМПОМ ПО МЕТКЕ
 function startStampGame(onWin) {
   const arena = document.getElementById('mg-arena');
   const feedbackEl = document.getElementById('mg-feedback');
-  let hits = 0;
-  const targetHits = 2;
+
+  const rounds = [
+    { speed: 1.75, tolerance: 46, targetBoxWidth: 132, stampWidth: 112, needHits: 2 },
+    { speed: 2.25, tolerance: 40, targetBoxWidth: 120, stampWidth: 108, needHits: 2 },
+    { speed: 2.70, tolerance: 36, targetBoxWidth: 112, stampWidth: 104, needHits: 2 }
+  ];
+
+  let roundIdx = 0;
+  let roundHits = 0;
   let pos = 0;
   let dir = 1;
   let locked = false;
 
-  arena.innerHTML = `
-    <div class="stamp-score-row">
-      <span>БЛАНК № 08-11</span>
-      <span id="stamp-hits-label">ОТТИСКОВ: 0 / ${targetHits}</span>
-    </div>
-    <div class="stamp-doc-sheet" id="stamp-sheet">
-      <div class="stamp-doc-lines"></div>
-      <div class="stamp-target-box" id="stamp-target">ПЕЧАТЬ СЮДА</div>
-      <div class="stamp-moving-head" id="stamp-head">ПРОВЕРЕНО</div>
-    </div>
-    <button id="stamp-hit-btn" class="primary-action-btn" style="margin-top:0;">🔴 ПОСТАВИТЬ ШТАМП</button>
-  `;
+  function setupRound() {
+    const r = rounds[roundIdx];
+    roundHits = 0;
+    pos = 0;
+    dir = 1;
 
-  const sheetEl = document.getElementById('stamp-sheet');
-  const targetEl = document.getElementById('stamp-target');
-  const headEl = document.getElementById('stamp-head');
-  const hitsLabel = document.getElementById('stamp-hits-label');
-  const hitBtn = document.getElementById('stamp-hit-btn');
+    arena.innerHTML = `
+      <div class="level-pill-row">
+        <span>РАУНД ${roundIdx + 1} ИЗ ${rounds.length}</span>
+        <span id="stamp-hits-label">ОТТИСКОВ: 0 / ${r.needHits}</span>
+      </div>
+      <div class="stamp-doc-sheet" id="stamp-sheet">
+        <div class="stamp-doc-lines"></div>
+        <div class="stamp-target-box" id="stamp-target" style="width:${r.targetBoxWidth}px;">ПЕЧАТЬ СЮДА</div>
+        <div class="stamp-moving-head" id="stamp-head" style="width:${r.stampWidth}px;">ПРОВЕРЕНО</div>
+      </div>
+      <button id="stamp-hit-btn" class="primary-action-btn mech-btn" style="margin-top:0;">ПОСТАВИТЬ ШТАМП</button>
+    `;
 
-  function loop() {
-    const maxW = Math.max(120, sheetEl.clientWidth - headEl.offsetWidth);
-    const speed = 2.6 + hits * 0.9;
-    pos += dir * speed;
-    if (pos >= maxW) { pos = maxW; dir = -1; }
-    if (pos <= 0) { pos = 0; dir = 1; }
-    headEl.style.left = `${pos}px`;
-    activeAnimFrame = requestAnimationFrame(loop);
-  }
-  activeAnimFrame = requestAnimationFrame(loop);
+    const sheetEl = document.getElementById('stamp-sheet');
+    const targetEl = document.getElementById('stamp-target');
+    const headEl = document.getElementById('stamp-head');
+    const hitsLabel = document.getElementById('stamp-hits-label');
+    const hitBtn = document.getElementById('stamp-hit-btn');
 
-  hitBtn.onclick = () => {
-    if (locked) return;
-    const headCenter = pos + headEl.offsetWidth / 2;
-    const targetCenter = targetEl.offsetLeft + targetEl.offsetWidth / 2;
-    const diff = Math.abs(headCenter - targetCenter);
+    if (activeAnimFrame) cancelAnimationFrame(activeAnimFrame);
 
-    if (diff <= 28) {
-      hits++;
-      haptic('success');
-      hitsLabel.textContent = `ОТТИСКОВ: ${hits} / ${targetHits}`;
-      feedbackEl.style.color = '#1e7e34';
-      feedbackEl.textContent = hits < targetHits ? '✓ Отличный оттиск! Поставь второй штамп.' : '✓ Документ заверен!';
-      if (hits >= targetHits) {
-        locked = true;
-        onWin();
-      }
-    } else {
-      haptic('error');
-      feedbackEl.style.color = '#c9182b';
-      feedbackEl.textContent = '✕ Смазано! Жми ровно в момент совпадения с зелёной рамкой.';
+    function loop() {
+      const maxW = Math.max(120, sheetEl.clientWidth - headEl.offsetWidth);
+      pos += dir * r.speed;
+      if (pos >= maxW) { pos = maxW; dir = -1; }
+      if (pos <= 0) { pos = 0; dir = 1; }
+      headEl.style.left = `${pos}px`;
+      activeAnimFrame = requestAnimationFrame(loop);
     }
-  };
+    activeAnimFrame = requestAnimationFrame(loop);
+
+    hitBtn.onclick = () => {
+      if (locked) return;
+      const headCenter = pos + headEl.offsetWidth / 2;
+      const targetCenter = targetEl.offsetLeft + targetEl.offsetWidth / 2;
+      const diff = Math.abs(headCenter - targetCenter);
+
+      if (diff <= r.tolerance) {
+        roundHits++;
+        haptic('success');
+        hitsLabel.textContent = `ОТТИСКОВ: ${roundHits} / ${r.needHits}`;
+        feedbackEl.style.color = '#7bc48b';
+
+        if (roundHits >= r.needHits) {
+          if (roundIdx + 1 < rounds.length) {
+            roundIdx++;
+            feedbackEl.textContent = `Раунд пройден. Переходим к раунду ${roundIdx + 1}...`;
+            setupRound();
+          } else {
+            locked = true;
+            feedbackEl.textContent = 'Все 3 раунда печати завершены.';
+            onWin();
+          }
+        } else {
+          feedbackEl.textContent = 'Точный оттиск. Нужен ещё один.';
+        }
+      } else {
+        haptic('error');
+        feedbackEl.style.color = '#e06a76';
+        feedbackEl.textContent = 'Мимо цели — нажми, когда штамп проходит над зелёной зоной.';
+      }
+    };
+  }
+
+  setupRound();
 }
 
-// 2. МИНИ-ИГРА: СБОРКА СХЕМЫ КОНТАКТОВ (3x3 поворотные дорожки)
 function startCircuitGame(onWin) {
   const arena = document.getElementById('mg-arena');
   const feedbackEl = document.getElementById('mg-feedback');
 
-  // Маршрут от (0,0) до (2,2):
-  // (0,0) L: вход слева -> вниз (connections: L=8, B=4 => mask 12)
-  // (1,0) L: сверху -> вправо (T=1, R=2 => mask 3)
-  // (1,1) I: слева -> вправо (L=8, R=2 => mask 10)
-  // (1,2) L: слева -> вниз (L=8, B=4 => mask 12)
-  // (2,2) L: сверху -> выход вправо (T=1, R=2 => mask 3)
-  const tiles = [
-    { type: 'L', rot: 1, req: true }, { type: 'I', rot: 0, req: false }, { type: 'L', rot: 2, req: false },
-    { type: 'L', rot: 2, req: true }, { type: 'I', rot: 1, req: true },  { type: 'L', rot: 0, req: true },
-    { type: 'I', rot: 1, req: false }, { type: 'L', rot: 3, req: false }, { type: 'L', rot: 1, req: true }
+  const levels = [
+    {
+      label: 'ПЛАТА №1 • БАЗОВАЯ ЦЕПЬ',
+      tiles: [
+        { type: 'L', rot: 1 }, { type: 'I', rot: 0 }, { type: 'L', rot: 2 },
+        { type: 'L', rot: 2 }, { type: 'I', rot: 1 }, { type: 'L', rot: 0 },
+        { type: 'I', rot: 1 }, { type: 'L', rot: 3 }, { type: 'L', rot: 1 }
+      ]
+    },
+    {
+      label: 'ПЛАТА №2 • УСЛОЖНЁННЫЙ МАРШРУТ',
+      tiles: [
+        { type: 'I', rot: 0 }, { type: 'I', rot: 0 }, { type: 'L', rot: 1 },
+        { type: 'L', rot: 1 }, { type: 'L', rot: 2 }, { type: 'L', rot: 0 },
+        { type: 'I', rot: 1 }, { type: 'L', rot: 2 }, { type: 'I', rot: 0 }
+      ]
+    }
   ];
 
-  // Базовые маски при rot=0:
-  // 'I': верх-низ (T=1, B=4)
-  // 'L': верх-право (T=1, R=2)
+  let lvlIdx = 0;
+  let tiles = levels[0].tiles.map((t) => ({ ...t }));
+
   function getMask(tile) {
-    let base = tile.type === 'I' ? [1, 0, 1, 0] : [1, 1, 0, 0]; // [T, R, B, L]
+    let base = tile.type === 'I' ? [1, 0, 1, 0] : [1, 1, 0, 0];
     const r = tile.rot % 4;
     for (let i = 0; i < r; i++) {
       base = [base[3], base[0], base[1], base[2]];
@@ -680,24 +797,25 @@ function startCircuitGame(onWin) {
   function renderGrid() {
     const gridHtml = tiles.map((t, idx) => {
       const pathSvg = t.type === 'I'
-        ? '<line x1="30" y1="0" x2="30" y2="60" stroke="#e0a653" stroke-width="7" stroke-linecap="round"/>'
-        : '<path d="M 30 0 L 30 30 L 60 30" fill="none" stroke="#e0a653" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>';
+        ? '<line x1="30" y1="0" x2="30" y2="60" stroke="#d49b4b" stroke-width="7" stroke-linecap="round"/>'
+        : '<path d="M 30 0 L 30 30 L 60 30" fill="none" stroke="#d49b4b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>';
       return `
         <div class="circuit-tile" data-idx="${idx}">
           <svg viewBox="0 0 60 60" style="transform: rotate(${t.rot * 90}deg)">
             ${pathSvg}
-            <circle cx="30" cy="30" r="4" fill="#fff"/>
+            <circle cx="30" cy="30" r="4" fill="#efe7d6"/>
           </svg>
         </div>
       `;
     }).join('');
 
+    // Подсказки входа/выхода убраны — ориентируемся по подсветке собираемого пути
     arena.innerHTML = `
+      <div class="level-pill-row">
+        <span>${levels[lvlIdx].label}</span>
+        <span>ЭТАП ${lvlIdx + 1}/${levels.length}</span>
+      </div>
       <div class="circuit-board">
-        <div class="circuit-endpoints">
-          <span>⚡ ВХОД (Слева верх)</span>
-          <span>ВЫХОД (Справа низ) ⚡</span>
-        </div>
         <div class="circuit-grid" id="circuit-grid">${gridHtml}</div>
       </div>
     `;
@@ -714,7 +832,6 @@ function startCircuitGame(onWin) {
   }
 
   function checkCircuit() {
-    // BFS от клетки 0 (должен быть открыт вход слева L=base[3]) до клетки 8 (выход справа R=base[1])
     const startMask = getMask(tiles[0]);
     if (!startMask[3]) return;
 
@@ -737,7 +854,18 @@ function startCircuitGame(onWin) {
         document.querySelectorAll('.circuit-tile').forEach((el) => {
           if (visited.has(Number(el.dataset.idx))) el.classList.add('powered');
         });
-        onWin();
+        if (lvlIdx + 1 < levels.length) {
+          lvlIdx++;
+          tiles = levels[lvlIdx].tiles.map((t) => ({ ...t }));
+          feedbackEl.style.color = '#7bc48b';
+          feedbackEl.textContent = 'Первая плата запитана. Собираем вторую схему...';
+          setTimeout(() => {
+            renderGrid();
+            checkCircuit();
+          }, 550);
+        } else {
+          onWin();
+        }
         return;
       }
 
@@ -759,30 +887,35 @@ function startCircuitGame(onWin) {
     document.querySelectorAll('.circuit-tile').forEach((el) => {
       if (visited.has(Number(el.dataset.idx))) el.classList.add('powered');
     });
-    feedbackEl.style.color = '#5c5347';
-    feedbackEl.textContent = 'Нажимай на плитки, чтобы замкнуть цепь до правого нижнего угла.';
+    feedbackEl.style.color = '#b5aa96';
+    feedbackEl.textContent = 'Поворачивай плитки — активная линия подсвечивается.';
   }
 
   renderGrid();
   checkCircuit();
 }
 
-// 3. МИНИ-ИГРА: НАКАЧКА ДАВЛЕНИЯ / УДЕРЖАНИЕ ШКАЛЫ
 function startPressureGame(onWin) {
   const arena = document.getElementById('mg-arena');
   const feedbackEl = document.getElementById('mg-feedback');
 
-  let needle = 15; // 0..100 (зелёная зона: 55..82)
-  let progress = 0; // 0..100
+  const phases = [
+    { label: 'РЕЖИМ 1 • РАЗГОН СИСТЕМЫ', rise: 0.92, fall: 0.68, fillRate: 0.52 },
+    { label: 'РЕЖИМ 2 • ВЫСОКОЕ ДАВЛЕНИЕ', rise: 1.12, fall: 0.92, fillRate: 0.44 }
+  ];
+
+  let phaseIdx = 0;
+  let needle = 15;
+  let progress = 0;
   let pressing = false;
   let won = false;
 
   arena.innerHTML = `
+    <div class="level-pill-row">
+      <span id="gauge-phase-label">${phases[0].label}</span>
+      <span id="gauge-pct-label">0%</span>
+    </div>
     <div class="gauge-panel">
-      <div style="display:flex; justify-content:space-between; font-size:11px; color:#cbbda6;">
-        <span>МАНОМЕТР АРХИВА</span>
-        <span id="gauge-pct-label">ЗАПОЛНЕНИЕ: 0%</span>
-      </div>
       <div class="gauge-bar-outer">
         <div class="gauge-green-zone"></div>
         <div class="gauge-danger-zone"></div>
@@ -791,10 +924,11 @@ function startPressureGame(onWin) {
       <div class="charge-progress-outer">
         <div class="charge-progress-fill" id="charge-fill"></div>
       </div>
-      <button id="pump-hold-btn" class="hold-pump-btn">⚡ ЗАЖМИ И УДЕРЖИВАЙ</button>
+      <button id="pump-hold-btn" class="hold-pump-btn">ЗАЖМИ И УДЕРЖИВАЙ</button>
     </div>
   `;
 
+  const phaseLabel = document.getElementById('gauge-phase-label');
   const needleEl = document.getElementById('gauge-needle');
   const fillEl = document.getElementById('charge-fill');
   const pctLabel = document.getElementById('gauge-pct-label');
@@ -811,37 +945,48 @@ function startPressureGame(onWin) {
 
   function loop() {
     if (won) return;
-    if (pressing) needle += 0.95;
-    else needle -= 0.72;
+    const ph = phases[phaseIdx];
+
+    if (pressing) needle += ph.rise;
+    else needle -= ph.fall;
 
     if (needle < 0) needle = 0;
     if (needle > 100) {
       needle = 45;
-      progress = Math.max(0, progress - 20);
+      progress = Math.max(0, progress - 22);
       haptic('error');
-      feedbackEl.style.color = '#c9182b';
-      feedbackEl.textContent = '⚠️ ПЕРЕГРУЗ! Отпускай кнопку раньше красной зоны.';
+      feedbackEl.style.color = '#e06a76';
+      feedbackEl.textContent = 'Перегруз — отпускай кнопку раньше красной зоны.';
     }
 
     needleEl.style.left = `calc(${needle}% - 3px)`;
 
     if (needle >= 55 && needle <= 82) {
-      progress = Math.min(100, progress + 0.65);
-      feedbackEl.style.color = '#1e7e34';
-      feedbackEl.textContent = '✓ Давление в норме! Удерживай в зелёной зоне...';
+      progress = Math.min(100, progress + ph.fillRate);
+      feedbackEl.style.color = '#7bc48b';
+      feedbackEl.textContent = 'Давление в зелёной зоне — удерживай.';
     } else if (needle < 55) {
-      feedbackEl.style.color = '#5c5347';
+      feedbackEl.style.color = '#b5aa96';
       feedbackEl.textContent = 'Зажми кнопку, чтобы поднять стрелку в зелёную зону.';
     }
 
     fillEl.style.width = `${progress}%`;
-    pctLabel.textContent = `ЗАПОЛНЕНИЕ: ${Math.floor(progress)}%`;
+    pctLabel.textContent = `${Math.floor(progress)}%`;
 
     if (progress >= 100) {
-      won = true;
-      setPress(false);
-      onWin();
-      return;
+      if (phaseIdx + 1 < phases.length) {
+        phaseIdx++;
+        progress = 0;
+        needle = 20;
+        phaseLabel.textContent = phases[phaseIdx].label;
+        feedbackEl.style.color = '#7bc48b';
+        feedbackEl.textContent = 'Первый режим пройден. Удерживай второй этап.';
+      } else {
+        won = true;
+        setPress(false);
+        onWin();
+        return;
+      }
     }
 
     activeAnimFrame = requestAnimationFrame(loop);
@@ -849,7 +994,6 @@ function startPressureGame(onWin) {
   activeAnimFrame = requestAnimationFrame(loop);
 }
 
-// 4. МИНИ-ИГРА: ФИНАЛЬНЫЙ КОДОВЫЙ ЗАМОК СЕЙФА
 function startSafeLockGame(onWin) {
   const arena = document.getElementById('mg-arena');
   const feedbackEl = document.getElementById('mg-feedback');
@@ -872,9 +1016,9 @@ function startSafeLockGame(onWin) {
 
     arena.innerHTML = `
       <div class="safe-lock-box">
-        <div style="font-size:10.5px; color:#cbbda6; font-weight:700;">КОДОВЫЙ ЗАМОК ТАЙНИКА № 08-11</div>
+        <div style="font-size:10.5px; color:#b5aa96; font-weight:700;">КОДОВЫЙ ЗАМОК ТАЙНИКА № 08-11</div>
         <div class="lock-wheels-grid">${wheelsHtml}</div>
-        <button id="unlock-safe-btn" class="primary-action-btn" style="margin-top:4px;">🔓 ОТКРЫТЬ СЕЙФ</button>
+        <button id="unlock-safe-btn" class="primary-action-btn mech-btn" style="margin-top:4px;">ОТКРЫТЬ СЕЙФ</button>
       </div>
     `;
 
@@ -895,8 +1039,8 @@ function startSafeLockGame(onWin) {
         onWin();
       } else {
         haptic('error');
-        feedbackEl.style.color = '#c9182b';
-        feedbackEl.textContent = '✕ Замок не поддаётся! Сверь слова с кодовой фразой в шапке дела.';
+        feedbackEl.style.color = '#e06a76';
+        feedbackEl.textContent = 'Замок не поддаётся — сверь слова с кодовой фразой в шапке дела.';
       }
     };
   }
@@ -904,19 +1048,78 @@ function startSafeLockGame(onWin) {
   renderWheels();
 }
 
+/* =========================================================
+   МЕНЮ НЕУДАЧНЫХ ДУБЛЕЙ (N1.MP3 - N6.MP3)
+   ========================================================= */
+function initBloopersModal() {
+  const listEl = document.getElementById('bloopers-list');
+  const statusEl = document.getElementById('blooper-player-status');
+  const stopBtn = document.getElementById('stop-blooper-btn');
+
+  listEl.innerHTML = '';
+  BLOOPER_TRACKS.forEach((trk) => {
+    const btn = document.createElement('button');
+    btn.className = 'blooper-item-btn';
+    btn.innerHTML = `<span>${trk.label}</span><span>ПУСК</span>`;
+
+    btn.onclick = () => {
+      document.querySelectorAll('.blooper-item-btn').forEach((el) => {
+        el.classList.remove('active');
+        el.lastElementChild.textContent = 'ПУСК';
+      });
+      btn.classList.add('active');
+      btn.lastElementChild.textContent = 'ИГРАЕТ';
+
+      audioEl.pause();
+      audioEl.src = trk.file;
+      audioEl.load();
+      duckBackgroundMusicForVoice();
+      audioEl.play().then(() => {
+        statusEl.textContent = `Воспроизводится: ${trk.label}`;
+      }).catch(() => {
+        statusEl.textContent = `Файл ${trk.file} не найден в assets/`;
+        restoreBackgroundMusicAfterVoice();
+      });
+    };
+
+    listEl.appendChild(btn);
+  });
+
+  stopBtn.onclick = () => {
+    audioEl.pause();
+    document.querySelectorAll('.blooper-item-btn').forEach((el) => {
+      el.classList.remove('active');
+      el.lastElementChild.textContent = 'ПУСК';
+    });
+    statusEl.textContent = 'Воспроизведение дубля остановлено.';
+    restoreBackgroundMusicAfterVoice();
+  };
+
+  bloopersMenuBtn.addEventListener('click', () => {
+    if (!questCompleted && currentUnlockedStage < STAGES.length - 1) return;
+    haptic('medium');
+    bloopersModalEl.classList.remove('hidden');
+  });
+
+  document.getElementById('close-bloopers').addEventListener('click', () => {
+    audioEl.pause();
+    restoreBackgroundMusicAfterVoice();
+    bloopersModalEl.classList.add('hidden');
+  });
+}
+
 playBtn.addEventListener('click', () => {
   if (audioEl.paused) {
-    if (activeStage?.hasTrainEvent) triggerTrainScreamer();
-    pauseBackgroundMusicForVoice();
+    duckBackgroundMusicForVoice();
     audioHintEl.classList.add('hidden');
     audioEl.play().then(() => {
-      playBtn.textContent = '❚❚ ПАУЗА ЗАПИСИ';
+      playBtn.textContent = 'ПАУЗА ЗАПИСИ';
       playBtn.classList.add('playing');
       reelLeft.classList.add('spinning');
       reelRight.classList.add('spinning');
     }).catch(() => {
       stopVoiceAudio();
-      audioHintEl.textContent = `Файл ${activeStage?.audio || 'mp3'} ещё не загружен в папку assets/`;
+      audioHintEl.textContent = `Файл ${activeStage?.audio || 'mp3'} не найден в папке assets/`;
       audioHintEl.classList.remove('hidden');
     });
   } else {
@@ -926,11 +1129,11 @@ playBtn.addEventListener('click', () => {
 
 function stopVoiceAudio() {
   audioEl.pause();
-  playBtn.textContent = '▶ ПУСК ЗАПИСИ';
+  playBtn.textContent = 'ПУСК ЗАПИСИ';
   playBtn.classList.remove('playing');
   reelLeft.classList.remove('spinning');
   reelRight.classList.remove('spinning');
-  resumeBackgroundMusicAfterVoice();
+  restoreBackgroundMusicAfterVoice();
 }
 
 audioEl.addEventListener('loadedmetadata', () => {
@@ -952,19 +1155,6 @@ audioEl.addEventListener('ended', () => {
   stopVoiceAudio();
 });
 
-function triggerTrainScreamer() {
-  haptic('heavy');
-  const overlay = document.getElementById('train-overlay');
-  const trainEntity = document.getElementById('train-entity');
-  trainEntity.style.animation = 'none';
-  void trainEntity.offsetWidth;
-  trainEntity.style.animation = '';
-  overlay.classList.remove('hidden');
-  setTimeout(() => haptic('heavy'), 450);
-  setTimeout(() => haptic('heavy'), 950);
-  setTimeout(() => { overlay.classList.add('hidden'); }, 2800);
-}
-
 document.getElementById('close-modal').addEventListener('click', () => {
   stopVoiceAudio();
   modalEl.classList.add('hidden');
@@ -982,14 +1172,18 @@ document.getElementById('reset-progress-btn').addEventListener('click', () => {
     localStorage.removeItem(STORAGE_KEY);
     currentUnlockedStage = 0;
     unlockedWords = [false, false, false, false];
+    questCompleted = false;
+    trainTriggeredBetween3And4 = false;
     stopVoiceAudio();
     stopMinigameLoop();
     modalEl.classList.add('hidden');
     mgModalEl.classList.add('hidden');
+    bloopersModalEl.classList.add('hidden');
     renderBoard();
   }
 });
 
 loadState();
 renderBoard();
+initBloopersModal();
 initSplashScreen();
