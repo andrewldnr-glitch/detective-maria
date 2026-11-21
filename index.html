@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- ЭКРАН ЗАГРУЗКИ (АРХИВНАЯ ПАПКА НА УГОЛЬНОМ СТОЛЕ) -->
+  <!-- ЭКРАН ПРИВЕТСТВИЯ / ЗАГРУЗКИ (АРХИВНАЯ ПАПКА НА УГОЛЬНОМ СТОЛЕ) -->
   <div id="splash-screen" class="splash-screen">
     <div class="splash-folder">
       <div class="folder-tab">АРХИВ МВД • 1988</div>
@@ -24,6 +24,10 @@
         <video id="splash-avatar-video" class="splash-avatar-media hidden" src="assets/detective.mp4" autoplay loop muted playsinline></video>
         <div id="splash-avatar-fallback" class="splash-avatar-fallback hidden">ДЕТЕКТИВ</div>
         <div class="splash-avatar-badge">ДЕТЕКТИВ МАРИЯ</div>
+      </div>
+
+      <div class="dossier-desc" style="text-align:left; font-size:11.5px; margin-bottom:10px;">
+        <strong>АРХИВНОЕ ДОСЬЕ № 08-11:</strong> Главный конверт исчез, а ниточки ведут от администратора Кучерявого на первом этаже к старым плёнкам и восьмилетней давности. Впереди допросы, спецпроверки и кодовая фраза из четырёх частей. Нажимай кнопку ниже, чтобы вскрыть дело.
       </div>
 
       <div class="splash-terminal" id="splash-terminal">
@@ -43,20 +47,20 @@
     </div>
   </div>
 
-  <!-- Скример/эпизод: Внезапный поезд с Пэрри Утконосом -->
+  <!-- Эпизод: Внезапный поезд догоняет Пэрри Утконоса между 4 и 5 этапами -->
   <div id="train-overlay" class="train-overlay hidden" role="dialog" aria-modal="true">
     <div class="train-card">
       <div class="dossier-tag">ВНЕЗАПНЫЙ ЭПИЗОД • РЕЛЬСЫ У ПЕРЕХОДА</div>
-      <h2 class="dossier-title" style="margin-bottom:10px;">ЭКСПРЕСС № 666 И ПЭРРИ УТКОНОС</h2>
+      <h2 class="dossier-title" style="margin-bottom:10px;">ЭКСПРЕСС ДОГОНЯЕТ ПЭРРИ УТКОНОСА</h2>
       <div class="polaroid-frame">
-        <div class="polaroid-image" style="height:170px;">
-          <img id="train-photo-img" class="polaroid-real-img" src="assets/photo_train.jpg" alt="Экспресс и Пэрри Утконос" />
+        <div class="polaroid-image" style="height:175px;">
+          <img id="train-photo-img" class="polaroid-real-img" src="assets/photo_train.gif" alt="Поезд догоняет Пэрри Утконоса" />
         </div>
-        <div class="polaroid-caption">Агент в шляпе на путях перед составом</div>
+        <div class="polaroid-caption">Локомотив накатывает сзади за агентом</div>
       </div>
       <div class="train-caption">ОУ, ЧЁРТ ВОЗЬМИ, ОТКУДА ЗДЕСЬ ЭТОТ ПОЕЗД?!</div>
-      <p class="dossier-desc" style="margin-top:8px;">Пэрри Утконос молча поправил шляпу и исчез в дыму экспресса, пока гудок `poezd.mp3` гремел на весь участок между 3-й и 4-й уликами.</p>
-      <button id="continue-after-train-btn" class="primary-action-btn mech-btn">ПРОДОЛЖИТЬ К УЛИКЕ №4</button>
+      <p class="dossier-desc" style="margin-top:8px;">Состав резко пошёл в погоню за Пэрри Утконосом, пока сигнал <code>poezd.mp3</code> гремел на весь участок между 4-м и 5-м этапами.</p>
+      <button id="continue-after-train-btn" class="primary-action-btn mech-btn">ПРОДОЛЖИТЬ К ФИНАЛУ</button>
     </div>
   </div>
 
@@ -144,7 +148,8 @@
         </div>
         <div id="quiz-box" class="quiz-box">
           <p id="modal-question" class="quiz-question"></p>
-          <div id="options-list" class="options-list"></div>
+          <div id="options-gate-notice" class="rules-hint">Дослушай запись этапа до конца, чтобы открылись варианты ответа.</div>
+          <div id="options-list" class="options-list hidden"></div>
           <p id="feedback-msg" class="feedback-msg"></p>
         </div>
         <div id="final-container"></div>

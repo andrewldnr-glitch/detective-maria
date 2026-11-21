@@ -8,7 +8,7 @@ if (tg) {
   } catch (e) {}
 }
 
-const STORAGE_KEY = 'detective_maria_state_v10';
+const STORAGE_KEY = 'detective_maria_state_v12_final';
 
 const STAGES = [
   {
@@ -503,6 +503,7 @@ function openStageModal(stage) {
         <div style="font-size: 11px; color: #b5aa96; font-weight: 700;">КОДОВАЯ ФРАЗА ДЛЯ ПОЛУЧЕНИЯ КОНВЕРТА:</div>
         <div class="final-phrase">«ВИСКА БАРСА И ВИСКА BTS»</div>
         <div style="font-size: 12px; color: #efe7d6;">Подойди к главному подозреваемому и произнеси этот пароль вслух. В шапке открыт доступ к неудачным дублям (n1–n6).</div>
+        <button id="copy-final-phrase-btn" class="mech-mini-btn copy-phrase-btn">СКОПИРОВАТЬ ПАРОЛЬ</button>
       </div>
     `;
   } else {
@@ -511,7 +512,13 @@ function openStageModal(stage) {
     document.getElementById('modal-question').textContent = stage.question;
 
     const optionsList = document.getElementById('options-list');
+    const optionsGateNotice = document.getElementById('options-gate-notice');
     optionsList.innerHTML = '';
+    optionsList.classList.add('hidden');
+    if (optionsGateNotice) {
+      optionsGateNotice.classList.remove('hidden');
+      optionsGateNotice.textContent = 'Дослушай запись этапа до конца, чтобы открылись варианты ответа.';
+    }
 
     stage.options.forEach((opt) => {
       const btn = document.createElement('button');
@@ -559,24 +566,26 @@ function handleStagePassed() {
   modalEl.classList.add('hidden');
 
   const advanceToNext = () => {
+    const afterUnlock = () => {
+      if (isNewProgress && finishedStage.id === 3 && !trainTriggeredBetween3And4) {
+        const randomDelayMs = 400 + Math.floor(Math.random() * 1400);
+        setTimeout(() => {
+          triggerTrainBetween3And4(() => {});
+        }, randomDelayMs);
+      }
+    };
     if (isNewProgress && finishedStage.nextMinigame) {
       openMinigameIntro(finishedStage.nextMinigame, () => {
         unlockNextStageAndRender(finishedStage.id);
+        afterUnlock();
       });
     } else if (isNewProgress) {
       unlockNextStageAndRender(finishedStage.id);
+      afterUnlock();
     }
   };
 
-  // Между 3-м этапом (id === 3) и 4-м этапом (id === 4) срабатывает случайный эпизод с поездом и Пэрри Утконосом
-  if (isNewProgress && finishedStage.id === 3 && !trainTriggeredBetween3And4) {
-    const randomDelayMs = 400 + Math.floor(Math.random() * 1400);
-    setTimeout(() => {
-      triggerTrainBetween3And4(advanceToNext);
-    }, randomDelayMs);
-  } else {
-    advanceToNext();
-  }
+  advanceToNext();
 }
 
 function triggerTrainBetween3And4(onDoneCallback) {
@@ -585,8 +594,14 @@ function triggerTrainBetween3And4(onDoneCallback) {
   haptic('heavy');
 
   const overlay = document.getElementById('train-overlay');
+  const trainCard = overlay.querySelector('.train-card');
   const continueBtn = document.getElementById('continue-after-train-btn');
   overlay.classList.remove('hidden');
+  if (trainCard) {
+    trainCard.classList.remove('shaking');
+    void trainCard.offsetWidth;
+    trainCard.classList.add('shaking');
+  }
 
   duckBackgroundMusicForVoice();
   trainAudioEl.currentTime = 0;
@@ -1119,8 +1134,9 @@ playBtn.addEventListener('click', () => {
       reelRight.classList.add('spinning');
     }).catch(() => {
       stopVoiceAudio();
-      audioHintEl.textContent = `Файл ${activeStage?.audio || 'mp3'} не найден в папке assets/`;
+      audioHintEl.textContent = `Файл ${activeStage?.audio || 'mp3'} не найден в папке assets/ — варианты открыты в запасном режиме`;
       audioHintEl.classList.remove('hidden');
+      revealStageOptions();
     });
   } else {
     stopVoiceAudio();
@@ -1150,9 +1166,21 @@ audioEl.addEventListener('timeupdate', () => {
   }
 });
 
+function revealStageOptions() {
+  const optionsList = document.getElementById('options-list');
+  const optionsGateNotice = document.getElementById('options-gate-notice');
+  if (optionsList) optionsList.classList.remove('hidden');
+  if (optionsGateNotice) optionsGateNotice.classList.add('hidden');
+}
+
 audioEl.addEventListener('ended', () => {
   progressBarEl.style.width = '100%';
   stopVoiceAudio();
+  revealStageOptions();
+});
+
+audioEl.addEventListener('error', () => {
+  revealStageOptions();
 });
 
 document.getElementById('close-modal').addEventListener('click', () => {
@@ -1187,3 +1215,27 @@ loadState();
 renderBoard();
 initBloopersModal();
 initSplashScreen();
+
+
+document.addEventListener('click', (e) => {
+  if (e.target && e.target.id === 'copy-final-phrase-btn') {
+    const phrase = 'ВИСКА БАРСА И ВИСКА BTS';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(phrase).then(() => {
+        e.target.textContent = 'ПАРОЛЬ СКОПИРОВАН';
+        haptic('success');
+      }).catch(() => {
+        e.target.textContent = phrase;
+      });
+    } else {
+      e.target.textContent = phrase;
+    }
+  }
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    if (!audioEl.paused) stopVoiceAudio();
+    if (!trainAudioEl.paused) trainAudioEl.pause();
+  }
+});
